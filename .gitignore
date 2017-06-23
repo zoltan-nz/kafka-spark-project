@@ -7,3 +7,6 @@ kafka/volumes
 derby.log
 metastore_db
 spark-warehouse
+.project
+.settings
+.classpath

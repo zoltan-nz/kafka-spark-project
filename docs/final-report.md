@@ -3,6 +3,9 @@ ENGR 440 - Report of Distributed Streaming Project
 
 Author: [Zoltan Debre](http://zoltan.nz) (300360191) - [Victoria University of Wellington](https://www.victoria.ac.nz/), New Zealand
 
+* Original repository: https://github.com/zoltan-nz/kafka-spark-project
+* Latest and original version of this document: https://github.com/zoltan-nz/kafka-spark-project/blob/master/docs/final-report.md 
+
 # Abstract
 
 The main goal of this project is to build a basic environment for streaming data from one or more source, pipe through via a stream management platform which can be accessed by different consumer.

@@ -24,20 +24,23 @@
 * The result of this phase: a working Kafka environment which streaming data so other consumers can use this stream.
 * Output: baseline performance valuation, unit tests, functional tests
 
-3. (20 pts) Apache Spark setup (3 weeks)
-Configure an Apache Spark environment in docker
-Setup data aggregation with Spark
-The output of this phase is an environment which provide an aggregated data in JSON format which can be consumed by a client application.
-Additional output: unit and acceptance tests for testing the API interface
+### Apache Spark setup (3 weeks)
 
-4. (20 pts) Client application (2 weeks)
-Assessing and selecting a client solution. Good candidates: Tableau, PowerBI
-Get JSON data via API
-Visualize the real-time data in Tableau or PowerBI.
+* Configure an Apache Spark environment in docker
+* Setup data aggregation with Spark
+* The output of this phase is an environment which provide an aggregated data in JSON format which can be consumed by a client application.
+* Additional output: unit and acceptance tests for testing the API interface
 
-5. (15 pts) Documentation and presentation (1 week)
+### Client application (2 weeks)
 
-Suggested technologies:
-Each component containerized with Docker
-Optionally using Kubernetes to manage containers and deployment
-Tools: Apache Kafka, Apache Spark, Node.js, Cassandra (preferred, maybe MongoDB)
+* Assessing and selecting a client solution. Good candidates: Tableau, PowerBI
+* Get JSON data via API
+* Visualize the real-time data in Tableau or PowerBI.
+
+### Documentation and presentation (1 week)
+
+### Suggested technologies
+
+* Each component containerized with Docker
+* Optionally using Kubernetes to manage containers and deployment
+* Tools: Apache Kafka, Apache Spark, Node.js, Cassandra (preferred, maybe MongoDB)

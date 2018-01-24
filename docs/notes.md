@@ -8,7 +8,19 @@
 **Crypto currency data streaming**
 
 * Examples: https://github.com/cryptoqween/cryptoqween.github.io
-* Schema example:
+
+Streaming data:
+
+```
+* Market (Bitfinex, Coinbase, ...)
+* Type (BUY / SELL / UNKNOWN)
+* ID
+* Price
+* Quantity
+* Total
+```
+
+Schema example 2:
 
 ```
 24h Change: $ 89.73 (1.13%)
@@ -26,9 +38,33 @@ Last Trade Volume To: $ 803.2
 24h VolumeTo: 
 ```
 
+
+
 **Deutsche Borse Dataset Schema:**
 
 * https://github.com/Deutsche-Boerse/dbg-pds/blob/master/docs/data_dictionary.md
+
+* [Raw data](https://s3.eu-central-1.amazonaws.com/deutsche-boerse-xetra-pds)
+* [csv](https://s3.eu-central-1.amazonaws.com/deutsche-boerse-eurex-pds/2018-02-01/2018-02-01_BINS_XEUR07.csv)
+
+The dataset contains the following fields:
+
+| Column Name | Data Description | Data Dictionary |
+|-------------|------------------|-----------------|
+|ISIN|ISIN of the security|string|
+|Mnemonic|Stock exchange ticker symbol |string|
+|SecurityDesc|Description of the security|string|
+|SecurityType|Type of security|string|
+|SecurityID|Unique identifier for each contract|int|
+|Date |Date of trading period |date |
+|Time |Hour and Minute of Trading Activity |time |
+|Currency|Currency in which the product is traded|string - GBP (British Pounds Sterling); USD (US Dollar) TWD (Taiwan Dollar); CHF (Swiss franc); GBX (British Pence Sterling); EUR (Euro); KRW (Korean Won)|
+|StartPrice|Trading price at the start of period|float|
+|MaxPrice|Maximum price over the period|float|
+|MinPrice|Minimum price over the period|float|
+|EndPrice|Trading price at the end of the period|float|
+|TradedVolume|Total value traded|float|
+|NumberOfTrades|Number of distinct transactions during the period|int|
 
 More links:
 

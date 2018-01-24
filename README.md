@@ -1,6 +1,7 @@
 # Apache Kafka and Apache Spark Project
 
 * [Proposal](docs/proposal.md)
+* [Notes](docs/notes.md)
 
 ## Research
 

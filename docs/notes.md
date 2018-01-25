@@ -70,4 +70,10 @@ More links:
 
 * https://chasing-coins.com/api/
 
+  
+Streaming data:
  
+* Let's go with Deutsche Borse data
+* Container 1: Load the cvs => HDFS, KAFKA
+* Container 2: Spark streamer
+* Analyticis 

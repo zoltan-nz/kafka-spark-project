@@ -41,3 +41,32 @@ Next steps:
 * Add material design
 * Add calendar widget
 * Send the selected date to the backend
+
+### Create backend API
+
+```
+$ git clone https://github.com/nestjs/typescript-starter.git db-downloader-backend
+$ cd db-downloader-backend
+$ rm -rf .git
+$ npm i
+```
+
+development
+```
+$ npm run start
+```
+
+watch mode
+```
+$ npm run start:dev
+$ open http://localhost:3000
+```
+
+production mode
+```
+npm run start:prod
+```
+
+### Changing development port
+
+Changing the start script in frontend package.json: `"start": "PORT=3001 react-scripts-ts start"`

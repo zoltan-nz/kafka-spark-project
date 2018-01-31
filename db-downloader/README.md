@@ -37,11 +37,6 @@ $ cd ./db-downloader-frontend
 $ npm start
 ```
 
-Next steps:
-* Add material design
-* Add calendar widget
-* Send the selected date to the backend
-
 ### Create backend API
 
 ```
@@ -70,3 +65,10 @@ npm run start:prod
 ### Changing development port
 
 Changing the start script in frontend package.json: `"start": "PORT=3001 react-scripts-ts start"`
+
+## Documentation
+
+* [API framework, Nest.js original README](db-downloader-backend/FRAMEWORK_README.md)
+* [Frontend framework, React.js original README](db-downloader-frontend/FRAMEWORK_README.md)
+* [Backend documentation](db-downloader-backend/README.md)
+* [Frontend documentation](db-downloader-frontend/README.md)

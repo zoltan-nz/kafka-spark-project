@@ -1,6 +1,4 @@
-# Notes
-
-## Finding financial data stream
+# Notes about finding financial data stream
 
 * Option 1: crypto currency data stream: https://min-api.cryptocompare.com/
 * Option 2: Deutsche Borse Public Dataset: https://aws.amazon.com/public-datasets/deutsche-boerse-pds/
@@ -70,10 +68,9 @@ More links:
 
 * https://chasing-coins.com/api/
 
-  
-Streaming data:
+Meeting notes with supervisors:
  
 * Let's go with Deutsche Borse data
 * Container 1: Load the cvs => HDFS, KAFKA
 * Container 2: Spark streamer
-* Analyticis 
+* Analytics 

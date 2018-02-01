@@ -5,3 +5,36 @@ Next steps:
 * Add material design
 * Add calendar widget
 * Send the selected date to the backend
+
+## Material Design
+
+Popular Material Design Addon: [Material-UI](http://www.material-ui.com/#/)
+
+```
+$ npm i -S material-ui typeface-roboto
+$ npm i -D @types/material-ui
+```
+
+Add `import 'typeface-roboto';` to `src/index.tsx`.
+
+Simple material button in `App.tsx`:
+
+```
+import * as React from 'react';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import RaisedButton from 'material-ui/RaisedButton';
+
+import './App.css';
+
+class App extends React.Component {
+  render() {
+    return (
+      <MuiThemeProvider>
+        <RaisedButton label="Default"/>
+      </MuiThemeProvider>
+    );
+  }
+}
+
+export default App;
+```

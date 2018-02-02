@@ -6,7 +6,7 @@ import './index.css';
 import 'typeface-roboto';
 
 ReactDOM.render(
-  <App />,
+  <App date={new Date()} />,
   document.getElementById('root') as HTMLElement
 );
 registerServiceWorker();

@@ -1,8 +1,8 @@
 # DB Downloader Frontend API
 
 Next steps:
-* Check backend availability
 * Add material design
+* Check backend availability
 * Add calendar widget
 * Send the selected date to the backend
 
@@ -38,3 +38,8 @@ class App extends React.Component {
 
 export default App;
 ```
+
+* State and Prop management
+* Change event
+* Click event
+* Ajax library

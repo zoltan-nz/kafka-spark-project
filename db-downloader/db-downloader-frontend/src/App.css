@@ -1,8 +1,15 @@
+.container {
+  padding: 20px;
+}
+
+.center {
+  text-align: center;
+}
+
 .paper {
   height: auto;
   width: auto;
   margin: 20px;
   padding: 20px;
-  text-align: center;
   display: block;
 }

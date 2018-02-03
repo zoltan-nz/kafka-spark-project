@@ -43,3 +43,8 @@ export default App;
 * Change event
 * Click event
 * Ajax library
+
+## Add Footer and check server status
+
+* Create a new component: `Footer`
+* Using `axios` to check server availability.

@@ -9,3 +9,4 @@ Next steps:
 * Install `cors` package and added to Express.
 * Create `heartbeat.controller.ts`
 * Add controller to the `app.module.ts`
+* Accept POST request on `/api/downloader`

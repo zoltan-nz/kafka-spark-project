@@ -40,9 +40,9 @@ class App extends Component<AppProps, AppState> {
               onChange={(e, d) => this.updateDate(e, d)}
               hintText="Select a streaming date"
             />
-            <RaisedButton label={'Download'} onClick={event => this.download(event)}/>
+            <RaisedButton label="Download" onClick={event => this.download(event)}/>
           </Paper>
-          <Footer />
+          <Footer/>
         </div>
       </MuiThemeProvider>
     );
@@ -51,7 +51,7 @@ class App extends Component<AppProps, AppState> {
   private download(event: MouseEvent<Object>) {
     event.preventDefault();
     console.log(this.state.date); // tslint:disable-line:no-console
-    Axios.post('/api/download-date', { date: this.state.date });
+    Axios.post('/api/downloader', { date: this.state.date });
   }
 
   private updateDate(event: null, date: Date) {

@@ -4,6 +4,7 @@ import { DownloaderDto } from './dto/downloader.dto';
 
 @Controller('api/downloader')
 export class DownloaderController {
+
   @Post()
   download(@Body() params: DownloaderDto) {
     const date = params.date;

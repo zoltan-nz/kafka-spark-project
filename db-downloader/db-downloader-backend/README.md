@@ -19,6 +19,14 @@ https://aws.amazon.com/sdk-for-node-js/
 $ npm install -S aws-sdk
 ```
 
+Add credentials to `~/.aws/credentials`
+
+```
+[default]
+aws_access_key_id =
+aws_secret_access_key =
+```
+
 CSV example:
 
 `s3://deutsche-boerse-eurex-pds/2018-02-14/2018-02-14-BINS-XEUR13.csv`

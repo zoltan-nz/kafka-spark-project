@@ -9,6 +9,7 @@ import Footer from './Footer';
 import Axios from 'axios';
 
 import './App.css';
+import * as moment from 'moment';
 
 const TITLE = 'Deutsche Borse Data Set Downloader';
 
@@ -50,12 +51,13 @@ class App extends Component<AppProps, AppState> {
 
   private download(event: MouseEvent<Object>) {
     event.preventDefault();
-    console.log(this.state.date); // tslint:disable-line:no-console
-    Axios.post('/api/downloader', { date: this.state.date });
+    const formattedDate = moment(this.state.date).format('YYYY-MM-DD');
+    console.log(formattedDate); // tslint:disable-line:no-console
+    Axios.post('/api/downloader', { date: formattedDate });
   }
 
   private updateDate(event: null, date: Date) {
-    this.setState((prevState, props) => ({ ...prevState, date }));
+    this.setState(prevState => ({ ...prevState, date }));
   }
 }
 

@@ -390,3 +390,4 @@ Temporary Items
 dokcer-compose.yml
 .env
 dist
+*.csv

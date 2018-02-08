@@ -1,7 +1,7 @@
 export class DownloaderDto {
-  constructor(date: Date) {
+  constructor(date: string) {
     this.date = date;
   }
 
-  readonly date: Date;
+  readonly date: string;
 }

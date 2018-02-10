@@ -1,10 +1,13 @@
 import { Component } from '@nestjs/common';
 import { appendFile, ensureFile, readFile, writeFile } from 'fs-extra';
-import axios, { AxiosRequestConfig, AxiosPromise, AxiosResponse } from 'axios';
-import { WriteStream, createWriteStream } from 'fs-extra';
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 const HOURS = [...Array(24).keys()].map(i => i < 10 ? `0${i}` : `${i}`);
 const CSV_STORAGE_PATH = 'csv-storage';
+
+const HEADER_LINE =
+  'ISIN,MarketSegment,UnderlyingSymbol,UnderlyingISIN,Currency,SecurityType,MaturityDate,StrikePrice,PutOrCall,MLEG,' +
+  'ContractGenerationNumber,SecurityID,Date,Time,StartPrice,MaxPrice,MinPrice,EndPrice,NumberOfContracts,NumberOfTrades\n';
 
 @Component()
 export class S3DownloaderService {
@@ -32,8 +35,11 @@ export class S3DownloaderService {
       };
 
       const promise = axios.get(url, config).then(async (response: AxiosResponse<string>) => {
+
+        const dataWithoutFirstLine = response.data.substring(response.data.indexOf('\n') + 1);
+
         await ensureFile(partialFileName);
-        writeFile(partialFileName, response.data);
+        await writeFile(partialFileName, dataWithoutFirstLine);
       });
       partialDownloadPromises.push(promise);
     }
@@ -49,6 +55,7 @@ export class S3DownloaderService {
 
   private async _concatenatePartials(date: string) {
     const concatenatedFileStream = await this._outputFileStream(date);
+    await appendFile(concatenatedFileStream, HEADER_LINE);
 
     for (const hour of HOURS) {
 

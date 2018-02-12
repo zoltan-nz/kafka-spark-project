@@ -4,4 +4,14 @@
 
 Kafka-node documentation: https://github.com/SOHU-Co/kafka-node
 
+## Install on mac
 
+```
+$ brew install kafka
+```
+
+## Zookeeper
+
+
+
+## Kafka

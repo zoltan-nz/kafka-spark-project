@@ -2,7 +2,7 @@ import { Component } from '@nestjs/common';
 import { appendFile, ensureFile, readFile, writeFile } from 'fs-extra';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 
-const HOURS = [...Array(24).keys()].map(i => i < 10 ? `0${i}` : `${i}`);
+const HOURS = [...Array(24).keys()].map(num => num.toString().padStart(2, '0'));
 const CSV_STORAGE_PATH = 'csv-storage';
 
 const HEADER_LINE =

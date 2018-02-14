@@ -10,8 +10,12 @@ Kafka-node documentation: https://github.com/SOHU-Co/kafka-node
 $ brew install kafka
 ```
 
-## Zookeeper
+## Zookeeper & Kafka
 
+```
+$ zookeeper-server-start ~/.brew/etc/kafka/zookeeper.properties
+```
 
-
-## Kafka
+```
+$ kafka-server-start ~/.brew/etc/kafka/server.properties
+```

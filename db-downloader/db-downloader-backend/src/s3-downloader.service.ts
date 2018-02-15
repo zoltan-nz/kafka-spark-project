@@ -10,7 +10,7 @@ const HEADER_LINE =
   'ContractGenerationNumber,SecurityID,Date,Time,StartPrice,MaxPrice,MinPrice,EndPrice,NumberOfContracts,NumberOfTrades\n';
 
 @Component()
-export class S3DownloaderService {
+export default class S3DownloaderService {
 
   private async _outputFileStream(date: string): Promise<string> {
     const fileName = `csv-storage/${date}.csv`;

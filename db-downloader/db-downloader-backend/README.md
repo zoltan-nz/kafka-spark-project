@@ -46,3 +46,37 @@ Use EUREX data, it is up-to-date.
 https://s3.eu-central-1.amazonaws.com/deutsche-boerse-eurex-pds/?list-type=2&continuation-token=
 https://s3.eu-central-1.amazonaws.com/deutsche-boerse-eurex-pds/?list-type=2&prefix=2018-03-2
 
+## Kafka Node
+
+* Using `kafka-node` package (require Python 2.7)
+
+Kafka-node documentation: https://github.com/SOHU-Co/kafka-node
+
+```
+$ pyenv local 2.7
+$ npm i -S kafka-node
+$ npm i -D @types/kafka-node
+```
+
+##* Install Kafka on mac
+
+```
+$ brew install kafka
+```
+
+### Zookeeper & Kafka
+
+```
+$ zookeeper-server-start ~/.brew/etc/kafka/zookeeper.properties
+```
+
+```
+$ kafka-server-start ~/.brew/etc/kafka/server.properties
+```
+
+### Kafka topics
+
+```
+$ kafka-topics --list --zookeeper localhost:2181
+$ kafka-topics --create --zookeeper localhost:2181 --partitions 1 --replication-factor 1 --topic boerse.dev
+```

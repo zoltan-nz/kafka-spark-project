@@ -1,7 +1,7 @@
 import { Body, Controller, Get, HttpCode } from '@nestjs/common';
 import { Post } from '@nestjs/common/utils/decorators/request-mapping.decorator';
 import { DownloaderDto } from './dto/downloader.dto';
-import { S3DownloaderService } from './s3-downloader.service';
+import S3DownloaderService from './s3-downloader.service';
 
 @Controller('api/downloader')
 export class DownloaderController {

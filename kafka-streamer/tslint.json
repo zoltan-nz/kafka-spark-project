@@ -1,8 +1,16 @@
 {
-    "extends": [
-        "tslint:recommended"
+  "extends": [
+    "tslint:recommended"
+  ],
+  "jsRules": {
+    "no-unused-expression": true
+  },
+  "rules": {
+    "quotemark": [
+      true,
+      "single"
     ],
-    "jsRules": {},
-    "rules": {},
-    "rulesDirectory": []
+    "no-console": false
+  },
+  "rulesDirectory": []
 }

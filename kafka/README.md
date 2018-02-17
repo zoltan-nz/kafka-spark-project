@@ -1,5 +1,11 @@
 # Kafka
 
+Install Kafka on mac
+
+```
+$ brew install kafka
+```
+
 Start Zookeeper:
 
 ```
@@ -10,4 +16,11 @@ Start Kafka:
 
 ```
 $ kafka-server-start ./kafka/config/server.properties
+```
+
+Kafka topics
+
+```
+$ kafka-topics --list --zookeeper localhost:2181
+$ kafka-topics --create --zookeeper localhost:2181 --partitions 1 --replication-factor 1 --topic boerse.dev
 ```

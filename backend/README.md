@@ -58,25 +58,3 @@ $ npm i -S kafka-node
 $ npm i -D @types/kafka-node
 ```
 
-##* Install Kafka on mac
-
-```
-$ brew install kafka
-```
-
-### Zookeeper & Kafka
-
-```
-$ zookeeper-server-start ~/.brew/etc/kafka/zookeeper.properties
-```
-
-```
-$ kafka-server-start ~/.brew/etc/kafka/server.properties
-```
-
-### Kafka topics
-
-```
-$ kafka-topics --list --zookeeper localhost:2181
-$ kafka-topics --create --zookeeper localhost:2181 --partitions 1 --replication-factor 1 --topic boerse.dev
-```

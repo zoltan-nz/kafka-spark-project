@@ -1,6 +1,6 @@
 import Paper from 'material-ui/Paper';
-import { Component } from 'react';
 import * as React from 'react';
+import { Component } from 'react';
 import axios from 'axios';
 
 enum ServerStatus {
@@ -21,6 +21,14 @@ export default class Footer extends Component<FooterProps, FooterStatus> {
 
   heartbeat: number;
 
+  constructor(props: FooterProps) {
+    super(props);
+    this.state = {
+      serverStatus: ServerStatus.Offline,
+      counter: 0
+    };
+  }
+
   async checkServerStatus() {
     try {
       await axios.get('http://localhost:3000/api/heartbeat');
@@ -36,14 +44,6 @@ export default class Footer extends Component<FooterProps, FooterStatus> {
         counter: prevState.counter + 1
       }));
     }
-  }
-
-  constructor(props: FooterProps) {
-    super(props);
-    this.state = {
-      serverStatus: ServerStatus.Offline,
-      counter: 0
-    };
   }
 
   componentDidMount() {

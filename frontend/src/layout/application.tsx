@@ -4,12 +4,12 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import SelectDate from '../components/select-date';
 import Footer from './footer';
 
-import './app.css';
+import '../styles/app.css';
 import Header from './header';
 
 interface IApp {}
 
-class App extends Component<IApp, IApp> {
+class Application extends Component<IApp, IApp> {
 
   render() {
     return (
@@ -24,4 +24,4 @@ class App extends Component<IApp, IApp> {
   }
 }
 
-export default App;
+export default Application;

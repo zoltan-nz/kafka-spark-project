@@ -48,3 +48,8 @@ export default App;
 
 * Create a new component: `Footer`
 * Using `axios` to check server availability.
+
+## Restructuring default layout
+
+* Separate code in subfolders.
+* Update Material UI

@@ -1,7 +1,11 @@
 import * as React from 'react';
 import { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import SelectDate from '../components/select-date';
+import { Route } from 'react-router';
+import { BrowserRouter } from 'react-router-dom';
+import Downloader from '../routes/downloader';
+import Home from '../routes/home';
+import Streamer from '../routes/streamer';
 import Footer from './footer';
 
 import '../styles/app.css';
@@ -13,13 +17,18 @@ class Application extends Component<IApp, IApp> {
 
   render() {
     return (
-      <MuiThemeProvider>
-        <Header />
-        <div className="container">
-          <SelectDate />
-          <Footer />
-        </div>
-      </MuiThemeProvider>
+      <BrowserRouter>
+        <MuiThemeProvider>
+          <Header />
+          <div className="container">
+            <Route path={'/'} exact={true} component={Home} />
+            <Route path={'/downloader'} component={Downloader} />
+            <Route path={'/streamer'} component={Streamer} />
+            <Footer />
+          </div>
+        </MuiThemeProvider>
+      </BrowserRouter>
+
     );
   }
 }

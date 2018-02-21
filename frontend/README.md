@@ -53,3 +53,7 @@ export default App;
 
 * Separate code in subfolders.
 * Update Material UI
+
+## Add router
+
+* react-router v4

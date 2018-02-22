@@ -1,5 +1,9 @@
 {
   "extends": "react-app",
   "rules": {
-    "no-console":"off"
+    "no-console": "off",
+    "no-debugger": [
+      false
+    ]
+  }
 }

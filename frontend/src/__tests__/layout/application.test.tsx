@@ -1,8 +1,8 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import Application from '../../layout/application';
+import App from '../../layout/app';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<Application />, div);
+  ReactDOM.render(<App />, div);
 });

@@ -12,6 +12,10 @@ export default class Streamer extends Component<IStreamerProps, IStreamerState> 
     super(props);
   }
 
+  componentDidMount() {
+    console.log('hello');
+  }
+
   render() {
     return (<h1>Streamer Page</h1>);
   }

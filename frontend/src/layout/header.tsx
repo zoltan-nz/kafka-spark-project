@@ -9,17 +9,18 @@ export default class Header extends Component<{}> {
 
   render() {
     return (
-      <Tabs>
-        {
-          routes.map((route, index) =>
-            <Tab
-              key={index}
-              label={route.label}
-              containerElement={<NavLink to={route.path} />}
-            />
-          )
-        }
-      </Tabs>
+        <Tabs>
+          {
+            routes.map((route, index) =>
+              <Tab
+                value={index}
+                key={index}
+                label={route.label}
+                containerElement={<NavLink exact={true} to={route.path} />}
+              />
+            )
+          }
+        </Tabs>
     );
   }
 }

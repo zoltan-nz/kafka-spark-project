@@ -9,7 +9,7 @@ export default class Main extends Component<{}> {
   render() {
     return (
       <div>
-        <Header />
+        <Header/>
         <div className="container">
           {routes.map((route, i) =>
             <Route key={i} exact={route.exact} path={route.path} component={route.component} />

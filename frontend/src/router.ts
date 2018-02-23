@@ -4,7 +4,7 @@ import Home from './routes/home';
 import Streamer from './routes/streamer';
 
 interface IRoute {
-  readonly exact?: boolean;
+  readonly exact: boolean;
   readonly label: string;
   readonly path: string;
   readonly component: ComponentType;
@@ -18,12 +18,14 @@ export const homeRoute: IRoute = {
 };
 
 export const downloaderRoute: IRoute = {
+  exact: true,
   label: 'Downloader',
   path: '/downloader',
   component: Downloader
 };
 
 export const streamerRoute: IRoute = {
+  exact: true,
   label: 'Streamer',
   path: '/streamer',
   component: Streamer

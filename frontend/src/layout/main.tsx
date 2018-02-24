@@ -4,6 +4,7 @@ import { Route } from 'react-router';
 import routes from '../router';
 import '../styles/app.css';
 import Header from './header';
+import Footer from './footer';
 
 export default class Main extends Component<{}> {
   render() {
@@ -12,8 +13,9 @@ export default class Main extends Component<{}> {
         <Header/>
         <div className="container">
           {routes.map((route, i) =>
-            <Route key={i} exact={route.exact} path={route.path} component={route.component} />
+            <Route key={i} exact={route.exact} path={route.path} component={route.component}/>
           )}
+          <Footer/>
         </div>
       </div>
     );

@@ -1,5 +1,18 @@
 # Apache Kafka and Apache Spark Project
 
+## Running the project
+
+Prerequisites:
+* Node.js
+* Kafka with Zookeeper
+
+```
+$ npm run setup
+$ npm start
+```
+
+## Project proposal
+
 * [Proposal](docs/proposal.md)
 * [Notes about finding datasource](docs/finding-datastream-notes.md)
 

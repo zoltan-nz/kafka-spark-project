@@ -1,0 +1,33 @@
+{
+  "name": "kafka-spark-project",
+  "version": "1.0.0",
+  "description": "Kafka, Spark, Node.js - Financial Data Streaming Experiment",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "setup": "npm install && cd ./backend && npm install && cd ../frontend && npm install",
+    "clean:kafka": "del ./kafka/logs ./kafka/zookeeper",
+    "start:kafka": "npm run clean:kafka && zookeeper-server-start ./kafka/config/zookeeper.properties & kafka-server-start ./kafka/config/server.properties",
+    "start:backend": "cd ./backend && npm run start:dev",
+    "start:frontend": "cd ./frontend && npm run start",
+    "start": "concurrently -k --names 'KAFKA,BACKEND,FRONTEND' 'npm run start:kafka' 'npm run start:backend' 'npm run start:frontend'",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zoltan-nz/kafka-spark-project.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zoltan-nz/kafka-spark-project/issues"
+  },
+  "homepage": "https://github.com/zoltan-nz/kafka-spark-project#readme",
+  "devDependencies": {
+    "concurrently": "^3.5.1",
+    "del-cli": "^1.1.0",
+    "nodemon": "^1.17.3"
+  }
+}

@@ -18,7 +18,7 @@ interface BoerseMessage {
   data: object;
 }
 
-export default class KafkaService {
+export default class Kafka {
 
   sendTransaction(data: BoerseMessage) {
 

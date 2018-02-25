@@ -1,20 +1,20 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import { AppController } from './app.controller';
+import { App } from '../../controllers/app';
 
 describe('AppController', () => {
   let app: TestingModule;
 
   beforeAll(async () => {
     app = await Test.createTestingModule({
-      controllers: [AppController],
+      controllers: [App],
     }).compile();
   });
 
   describe('root', () => {
-    it('should return "Hello World!"', () => {
-      const appController = app.get<AppController>(AppController);
-      expect(appController.root()).toBe('Hello World!');
+    it('should return a confirmation message', () => {
+      const appController = app.get<App>(App);
+      expect(appController.root()).toBe('Backend server is running...');
     });
   });
 });

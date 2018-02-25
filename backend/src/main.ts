@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
+import { AppModule } from './modules/app';
 import * as cors from 'cors';
-import KafkaService from './kafka.service';
+import Kafka from './services/kafka';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -13,7 +13,7 @@ async function bootstrap() {
 bootstrap();
 
 function playingWithKafka() {
-  const kafkaService = new KafkaService();
+  const kafkaService = new Kafka();
 
   kafkaService.sendTransaction({data: {message: 'hello'}});
 }

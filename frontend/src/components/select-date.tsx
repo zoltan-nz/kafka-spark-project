@@ -18,7 +18,7 @@ export default class SelectDate extends Component<SelectDateProps, SelectDateSta
   constructor(props: SelectDateProps) {
     super(props);
     this.state = {
-      date: this.props.date || new Date()
+      date: props.date || new Date()
     };
   }
 

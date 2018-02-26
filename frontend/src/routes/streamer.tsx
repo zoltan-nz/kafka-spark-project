@@ -1,5 +1,5 @@
 import Axios, { AxiosResponse } from 'axios';
-import { Component } from 'react';
+import { Component, MouseEvent } from 'react';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 
@@ -15,7 +15,7 @@ export default class Streamer extends Component<IStreamerProps, IStreamerState> 
 
   constructor(props: IStreamerProps) {
     super(props);
-    this.state = { files: this.props.files || []};
+    this.state = { files: this.props.files || [] };
   }
 
   async componentDidMount() {
@@ -29,9 +29,15 @@ export default class Streamer extends Component<IStreamerProps, IStreamerState> 
       <div>
         <h1>Streamer Page</h1>
         <ul>
-          {this.state.files.map((file, i) => <li key={i}>{file}</li>)}
+          {this.state.files.map((file, i) =>
+            <li key={i}><a onClick={e => this.handleFileClick(e, file)}>{file}</a></li>)}
         </ul>
       </div>
     );
+  }
+
+  private handleFileClick(event: MouseEvent<Object>, fileName: string) {
+    event.preventDefault();
+    Axios.post('/api/data-files', { fileName });
   }
 }

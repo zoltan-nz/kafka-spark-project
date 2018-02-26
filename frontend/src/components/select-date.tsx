@@ -27,7 +27,7 @@ export default class SelectDate extends Component<SelectDateProps, SelectDateSta
       <Paper className="paper center" zDepth={1}>
         <DatePicker
           value={this.state.date}
-          onChange={(e, d) => this.updateDate(e, d)}
+          onChange={(event, date) => this.updateDate(event, date)}
           hintText="Select a streaming date"
         />
         <RaisedButton label="Download" onClick={event => this.download(event)}/>

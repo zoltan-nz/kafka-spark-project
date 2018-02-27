@@ -30,7 +30,7 @@ export default class Streamer extends Component<IStreamerProps, IStreamerState> 
         <h1>Streamer Page</h1>
         <ul>
           {this.state.files.map((file, i) =>
-            <li key={i}><a onClick={e => this.handleFileClick(e, file)}>{file}</a></li>)}
+            <li key={i}><a href="#" onClick={e => this.handleFileClick(e, file)}>{file}</a></li>)}
         </ul>
       </div>
     );

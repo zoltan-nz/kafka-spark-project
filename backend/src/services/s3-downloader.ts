@@ -48,7 +48,7 @@ export default class S3Downloader {
       await Promise.all(partialDownloadPromises);
       return Promise.resolve(true);
     } catch (e) {
-      console.log(e.message);
+      console.error(e.message);
       return Promise.resolve(false);
     }
   }
@@ -76,7 +76,7 @@ export default class S3Downloader {
     console.time('partial download');
     const isPartialsDownloaded = await this._downloadPartials(date);
     console.timeEnd('partial download');
-    console.log(isPartialsDownloaded);
+    console.log('Are partials downloaded properly?', isPartialsDownloaded);
 
     if (isPartialsDownloaded) {
       console.time('concatenate');

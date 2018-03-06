@@ -1,12 +1,13 @@
-import { Client, HighLevelProducer, KafkaClient } from 'kafka-node';
-import KafkaNode = require('kafka-node');
+import * as KafkaNode from 'kafka-node';
+
+// import KafkaNode = require('kafka-node');
 import WritableStream = NodeJS.WritableStream;
 
 const KAFKA_TOPIC = 'boerse.dev';
 
-const client = new KafkaClient();
+const client = new KafkaNode.KafkaClient();
 
-const producer = new HighLevelProducer(client);
+const producer = new KafkaNode.HighLevelProducer(client);
 
 const producerStream: WritableStream = new KafkaNode.ProducerStream(client);
 
@@ -44,6 +45,3 @@ export default class Kafka {
     producer.send(record, (err, d) => console.log(err, d));
   }
 }
-
-// const service = new KafkaService();
-// service.sendTransaction({ data: { some: 'object' } });

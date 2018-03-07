@@ -1,7 +1,7 @@
 import { Controller, Get, HttpCode } from '@nestjs/common';
 
 @Controller('api/heartbeat')
-export class Heartbeat {
+export class HeartbeatController {
 
   @HttpCode(200)
   @Get()

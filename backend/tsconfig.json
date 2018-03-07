@@ -18,7 +18,8 @@
     "typeRoots": [
       "@types",
       "node_modules/@types"
-    ]
+    ],
+    "forceConsistentCasingInFileNames": true
   },
   "include": [
     "src/**/*"

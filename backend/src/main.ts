@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './modules/app';
+import { AppModule } from './modules/app.module';
 import * as cors from 'cors';
-import Kafka from './services/kafka';
+import KafkaService from './services/kafka.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

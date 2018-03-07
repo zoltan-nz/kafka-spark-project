@@ -1,11 +1,3 @@
-// Type definitions for kafka-node 2.0
-// Project: https://github.com/SOHU-Co/kafka-node/
-// Definitions by: Daniel Imrie-Situnayake <https://github.com/dansitu>, Bill <https://github.com/bkim54>, Michael Haan <https://github.com/sfrooster>, Amiram Korach <https://github.com/amiram>
-// Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
-
-/// <reference types="node" />
-
-// # Classes
 export class Client {
   constructor(connectionString: string, clientId?: string, options?: ZKOptions, noBatchOptions?: AckBatchOptions, sslOptions?: any);
   close(cb?: () => void): void;
@@ -142,7 +134,7 @@ export interface ZKOptions {
 export interface ProduceRequest {
   topic: string;
   messages: any; // string[] | Array<KeyedMessage> | string | KeyedMessage
-  key?: any;
+  key?: string;
   partition?: number;
   attributes?: number;
 }

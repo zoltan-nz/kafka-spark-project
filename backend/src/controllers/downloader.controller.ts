@@ -1,12 +1,12 @@
 import { Body, Controller, Get, HttpCode } from '@nestjs/common';
 import { Post } from '@nestjs/common/utils/decorators/request-mapping.decorator';
-import { DownloadDto } from '../dto/download-dto';
-import S3Downloader from '../services/s3-downloader';
+import { DownloadDto } from '../dtos/download.dto';
+import S3DownloaderService from '../services/s3-downloader.service';
 
 @Controller('api/downloader')
-export class Downloader {
+export class DownloaderController {
 
-  constructor(private readonly s3DownloaderService: S3Downloader) {
+  constructor(private readonly s3DownloaderService: S3DownloaderService) {
   }
 
   @Post()

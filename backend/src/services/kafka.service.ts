@@ -23,7 +23,7 @@ interface BoerseMessage {
   data: object;
 }
 
-export default class Kafka {
+export default class KafkaService {
 
   stream() {
     return new KafkaNode.ProducerStream(client);

@@ -2,7 +2,7 @@ import { Body, Controller, Get, Post } from '@nestjs/common';
 import { readdir, readFile } from 'fs-extra';
 import { resolve } from 'path';
 import { cwd } from 'process';
-import Kafka from '../services/kafka';
+import KafkaService from '../services/kafka.service';
 import { createReadStream } from 'fs-extra';
 import { Transform } from 'stream';
 
@@ -30,7 +30,7 @@ const csvFiles = async (): Promise<string[]> => {
 };
 
 @Controller('api/data-files')
-export class DataFiles {
+export class DataFilesController {
 
   @Get()
   async findAll() {
@@ -43,7 +43,7 @@ export class DataFiles {
     const fileName = payload.fileName;
     console.log('Start streaming...', fileName);
 
-    const kafkaService = new Kafka();
+    const kafkaService = new KafkaService();
     const kafkaServiceStream = kafkaService.stream();
 
     const csvTransform = new Transform({

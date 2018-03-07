@@ -1,7 +1,11 @@
 {
-  "name": "nest-typescript-starter",
+  "name": "kafka-spark-backend",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zoltan-nz/kafka-spark-project/tree/master/backend"
+  },
   "version": "1.0.0",
-  "description": "Nest TypeScript starter repository",
+  "description": "Backend",
   "license": "MIT",
   "scripts": {
     "lint": "tslint --project ./tsconfig.json --fix",
@@ -52,7 +56,7 @@
       "ts"
     ],
     "rootDir": "src",
-    "testRegex": "test.ts$",
+    "testRegex": "spec.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     },

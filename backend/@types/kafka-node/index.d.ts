@@ -1,5 +1,7 @@
 declare module 'kafka-node' {
 
+  import { Writable } from 'stream';
+
   export class Client {
     constructor(connectionString: string, clientId?: string, options?: ZKOptions, noBatchOptions?: AckBatchOptions, sslOptions?: any);
 
@@ -128,6 +130,18 @@ declare module 'kafka-node' {
     constructor(key: string, value: string | Buffer);
   }
 
+  export class ProducerStream extends Writable {
+    constructor(options?: ProducerStreamOptions);
+
+    sendPayload(payloads: ProduceRequest[], cb: (error: any, data: any) => any): void;
+
+    close(cb?: () => any): void;
+
+    _write(message: ProduceRequest, encoding: 'buffer' | 'utf8', cb: (error: any, data: any) => any): void;
+
+    _writev(chunks: Chunk[], cb: (error: any, data: any) => any): void;
+  }
+
 // # Interfaces
 
   export interface Message {
@@ -153,6 +167,12 @@ declare module 'kafka-node' {
     connectRetryOptions?: RetryOptions;
     sslOptions?: any;
     clientId?: string;
+  }
+
+  export interface ProducerStreamOptions {
+    kafkaClient?: KafkaClientOptions;
+    producer?: ProducerOptions;
+    highWaterMark?: number;
   }
 
   export interface RetryOptions {
@@ -263,6 +283,10 @@ declare module 'kafka-node' {
     topic: string;
     partition?: number;
     offset?: number;
+  }
+
+  export interface Chunk {
+    chunk: ProduceRequest;
   }
 
   export class TopicsNotExistError extends Error {

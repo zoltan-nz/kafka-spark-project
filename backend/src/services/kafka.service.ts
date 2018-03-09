@@ -1,15 +1,8 @@
 import * as KafkaNode from 'kafka-node';
 
-// import KafkaNode = require('kafka-node');
-import WritableStream = NodeJS.WritableStream;
-
 const KAFKA_TOPIC = 'boerse.dev';
-
 const client = new KafkaNode.KafkaClient();
-
 const producer = new KafkaNode.HighLevelProducer(client);
-
-const producerStream: WritableStream = new KafkaNode.ProducerStream(client);
 
 producer.on('ready', () => {
   console.log('Kafka Producer is connected and ready.');
@@ -26,7 +19,7 @@ interface BoerseMessage {
 export default class KafkaService {
 
   stream() {
-    return new KafkaNode.ProducerStream(client);
+    return new KafkaNode.ProducerStream();
   }
 
   sendTransaction(data: BoerseMessage) {

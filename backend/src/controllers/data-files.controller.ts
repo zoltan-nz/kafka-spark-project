@@ -2,7 +2,7 @@ import { Body, Controller, Get, Post } from '@nestjs/common';
 import { readdir, readFile } from 'fs-extra';
 import { resolve } from 'path';
 import { cwd } from 'process';
-import KafkaService from '../services/kafka.service';
+import * as KafkaNode from 'kafka-node';
 import { createReadStream } from 'fs-extra';
 import { Transform } from 'stream';
 
@@ -43,8 +43,7 @@ export class DataFilesController {
     const fileName = payload.fileName;
     console.log('Start streaming...', fileName);
 
-    const kafkaService = new KafkaService();
-    const kafkaServiceStream = kafkaService.stream();
+    const kafkaServiceStream = new KafkaNode.ProducerStream();
 
     const csvTransform = new Transform({
       highWaterMark: 100,

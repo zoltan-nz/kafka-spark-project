@@ -54,3 +54,21 @@ $ kubectl version
 $ kubectl cluster-info
 $ kubectl get nodes
 ```
+
+## Kafka Docker Container
+
+* Most popular Kafka Docker Container: https://hub.docker.com/r/wurstmeister/kafka/
+* About Kafka Connectivity: https://github.com/wurstmeister/kafka-docker/wiki/Connectivity
+
+```
+$ docker pull wurstmeister/kafka
+```
+
+`docker-compose.yml`: https://github.com/wurstmeister/kafka-docker/blob/master/docker-compose.yml
+
+
+### Performance Test
+
+```
+$ kafka-producer-perf-test --num-records 3000000 --record-size 1024 --topic test_performance --throughput 100000 --producer-props bootstrap.servers=localhost:9092
+```

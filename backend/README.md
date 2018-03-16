@@ -62,3 +62,10 @@ Extra steps:
 
 * From the type definition was missing the `ProducerStream` class declaration.
 * Suggested to the project maintainer, that we should keep the type definition directly in the project.
+
+## Add Dockerfile
+
+* Check `Dockerfile`
+* Using `node:alpine` package
+* Add `/healthz` endpoint
+* Add graceful shutdown based on [these suggestions](https://github.com/BretFisher/node-docker-good-defaults)

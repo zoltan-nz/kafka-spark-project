@@ -57,3 +57,12 @@ export default App;
 ## Add router
 
 * react-router v4
+
+## Docker build
+
+* Using `nginx:alpine`
+
+```
+$ docker build -t zoltannz/kafka-spark-project-frontend .
+
+```

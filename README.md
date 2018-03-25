@@ -3,12 +3,31 @@
 ## Running the project
 
 Prerequisites:
-* Node.js
-* Kafka with Zookeeper
+* Docker
+
+```
+$ npm start
+```
+
+Running components in separated docker container.
+
+## Development
+
+Prerequisites:
+* Locally installed Node.js
+* Locally installed Kafka with Zookeeper
 
 ```
 $ npm run setup
-$ npm start
+$ npm start:dev
+```
+
+Start the project in developer mode and run locally instead in docker container.
+
+## Run test
+
+```
+$ npm run test
 ```
 
 ## Project proposal

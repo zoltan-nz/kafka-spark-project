@@ -7,13 +7,14 @@
     "doc": "docs"
   },
   "scripts": {
+    "start": "docker-compose up",
     "setup": "npm install && cd ./backend && npm install && cd ../frontend && npm install",
     "clean:kafka": "del ./kafka/logs ./kafka/zookeeper",
     "start:kafka": "npm run clean:kafka && zookeeper-server-start ./kafka/config/zookeeper.properties & kafka-server-start ./kafka/config/server.properties",
     "start:backend": "cd ./backend && npm run start:dev",
-    "start:frontend": "cd ./frontend && npm run start",
-    "start": "concurrently -k --names 'KAFKA,BACKEND,FRONTEND' 'npm run start:kafka' 'npm run start:backend' 'npm run start:frontend'",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start:frontend": "cd ./frontend && npm run start:dev",
+    "start:dev": "concurrently -k --names 'KAFKA,BACKEND,FRONTEND' 'npm run start:kafka' 'npm run start:backend' 'npm run start:frontend'",
+    "test": "cd ./backend && npm run test && cd ../frontend && npm run test"
   },
   "repository": {
     "type": "git",

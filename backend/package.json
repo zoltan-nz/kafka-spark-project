@@ -13,9 +13,8 @@
     "start:dev": "nodemon",
     "prestart:prod": "rm -rf dist && tsc",
     "start:prod": "node dist/main.js",
-    "test": "jest --watch",
-    "test:cov": "jest --coverage",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:watch": "jest --watch",
+    "test": "jest --coverage"
   },
   "dependencies": {
     "@nestjs/common": "^4.6.6",

@@ -19,7 +19,9 @@
     "test:watch": "react-scripts-ts test --env=jsdom",
     "test": "react-scripts-ts test --env=jsdom --coverage",
     "eject": "react-scripts-ts eject",
-    "lint": "tslint --project tsconfig.json --config tslint.json --fix"
+    "lint": "tslint --project tsconfig.json --config tslint.json --fix",
+    "docker:build": "npm run build && docker build -t zoltannz/kafka-spark-project-frontend .",
+    "docker:run": "docker run -p 80:80 zoltannz/kafka-spark-project-frontend:latest"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",

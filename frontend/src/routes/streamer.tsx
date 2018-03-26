@@ -19,7 +19,7 @@ export default class Streamer extends Component<IStreamerProps, IStreamerState> 
   }
 
   async componentDidMount() {
-    const response: AxiosResponse<string[]> = await Axios.get<string[]>('/api/data-files');
+    const response: AxiosResponse<string[]> = await Axios.get<string[]>('http://localhost:3000/api/data-files');
     const files: string[] = response.data;
     this.setState(prevState => ({ ...prevState, files }));
   }

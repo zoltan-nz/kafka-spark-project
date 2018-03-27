@@ -38,6 +38,6 @@ export default class Streamer extends Component<IStreamerProps, IStreamerState> 
 
   private handleFileClick(event: MouseEvent<Object>, fileName: string) {
     event.preventDefault();
-    Axios.post('http://localhost:3000/api/data-files', { fileName });
+    Axios.post('/api/data-files', { fileName });
   }
 }

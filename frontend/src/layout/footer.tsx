@@ -31,7 +31,7 @@ export default class Footer extends Component<FooterProps, FooterStatus> {
 
   async checkServerStatus() {
     try {
-      await axios.get('http://localhost:3000/api/heartbeat');
+      await axios.get('/api/heartbeat');
       this.setState(prevState => ({
         ...prevState,
         serverStatus: ServerStatus.Online,
@@ -47,7 +47,7 @@ export default class Footer extends Component<FooterProps, FooterStatus> {
   }
 
   componentDidMount() {
-    this.heartbeat = window.setInterval(this.checkServerStatus.bind(this), 1000);
+    this.heartbeat = window.setInterval(this.checkServerStatus.bind(this), 5000);
   }
 
   componentWillUnmount() {

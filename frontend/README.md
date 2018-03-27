@@ -61,8 +61,8 @@ export default App;
 ## Docker build
 
 * Using `nginx:alpine`
+* Add nginx configuration
 
 ```
 $ docker build -t zoltannz/kafka-spark-project-frontend .
-
 ```

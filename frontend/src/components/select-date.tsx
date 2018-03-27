@@ -43,6 +43,6 @@ export default class SelectDate extends Component<SelectDateProps, SelectDateSta
     event.preventDefault();
     const formattedDate = moment(this.state.date).format('YYYY-MM-DD');
     console.log(formattedDate); // tslint:disable-line:no-console
-    Axios.post('http://localhost:3000/api/downloader', { date: formattedDate });
+    Axios.post('/api/downloader', { date: formattedDate });
   }
 }

@@ -14,7 +14,7 @@
     "start:backend": "cd ./backend && npm run start:dev",
     "start:frontend": "cd ./frontend && npm run start:dev",
     "start:dev": "concurrently -k --names 'KAFKA,BACKEND,FRONTEND' 'npm run start:kafka' 'npm run start:backend' 'npm run start:frontend'",
-    "docker:build": "cd ./backend && npm run docker:build && cd ../frontend && npm run docker:build && docker-compose build",
+    "docker:build": "cd ./backend & npm run docker:build & cd ../frontend & npm run docker:build",
     "test": "cd ./backend && npm run test && cd ../frontend && npm run test"
   },
   "repository": {

@@ -8,6 +8,9 @@ services:
   backend:
     build: backend
     image: zoltannz/kafka-spark-project-backend:latest
+    environment:
+      KAFKA_CONNECT: kafka:9092
+      ZOOKEEPER_CONNECT: zookeeper:2181
     ports:
       - "3000:3000"
   zookeeper:
@@ -17,7 +20,12 @@ services:
   kafka:
     image: wurstmeister/kafka:latest
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: localhost
+      KAFKA_ADVERTISED_HOST_NAME: 172.18.0.5
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_MESSAGE_MAX_BYTES: 2000000
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
+      LOG4J_LOGGER_KAFKA_AUTHORIZER_LOGGER: DEBUG, authorizerAppender
     ports:
-      - "9092"
+      - "9092:9092"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock

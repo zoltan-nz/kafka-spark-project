@@ -1,9 +1,9 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
-import { readdir, readFile } from 'fs-extra';
+import { createReadStream, readdir } from 'fs-extra';
 import { resolve } from 'path';
 import { cwd } from 'process';
 import * as KafkaNode from 'kafka-node';
-import { createReadStream } from 'fs-extra';
+import { ProducerStreamOptions } from 'kafka-node';
 import { Transform } from 'stream';
 
 interface FileDto {
@@ -42,15 +42,21 @@ export class DataFilesController {
   async startStreaming(@Body() payload: FileDto) {
     const fileName = payload.fileName;
     console.log('Start streaming...', fileName);
+    console.log('KAFKA_CONNECT:', process.env.KAFKA_CONNECT);
 
-    const kafkaServiceStream = new KafkaNode.ProducerStream();
+    const producerStreamOptions: ProducerStreamOptions = {
+      kafkaClient: {
+        kafkaHost: process.env.KAFKA_CONNECT || 'http://localhost:9092',
+      },
+    };
+    const kafkaServiceStream = new KafkaNode.ProducerStream(producerStreamOptions);
 
     const csvTransform = new Transform({
       highWaterMark: 100,
       objectMode: true,
       decodeStrings: true,
       transform(text, encoding, callback) {
-        console.log(`pushing message ${text} to borse.dev topic`);
+        console.log(`pushing message ${text} to boerse.dev topic`);
         callback(null, {
           topic: 'boerse.dev',
           messages: text,
@@ -58,9 +64,14 @@ export class DataFilesController {
       },
     });
 
-    createReadStream(resolve(cwd(), CSV_STORAGE_DIRECTORY_NAME, fileName), {highWaterMark: 100})
-      .pipe(csvTransform)
-      .pipe(kafkaServiceStream);
-    // csvTransform.destroy();
+    try {
+      createReadStream(resolve(cwd(), CSV_STORAGE_DIRECTORY_NAME, fileName), { highWaterMark: 100 })
+        .pipe(csvTransform)
+        .pipe(kafkaServiceStream);
+
+    } catch (e) {
+      console.error('Read Stream Error', e);
+    }
+
   }
 }

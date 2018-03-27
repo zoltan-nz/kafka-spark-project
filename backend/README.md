@@ -69,3 +69,4 @@ Extra steps:
 * Using `node:alpine` package
 * Add `/healthz` endpoint
 * Add graceful shutdown based on [these suggestions](https://github.com/BretFisher/node-docker-good-defaults)
+* Add `pm2` for running and restarting node process

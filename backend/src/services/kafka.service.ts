@@ -12,9 +12,14 @@ export default class KafkaService {
 
   client: KafkaNode.KafkaClient;
   producer: KafkaNode.HighLevelProducer;
+  kafkaClientOptions: KafkaNode.KafkaClientOptions;
 
   constructor() {
-    this.client = new KafkaNode.KafkaClient();
+    this.kafkaClientOptions = {
+      kafkaHost: process.env.KAFKA_CONNECT,
+    };
+
+    this.client = new KafkaNode.KafkaClient(this.kafkaClientOptions);
     this.producer = new KafkaNode.HighLevelProducer(this.client);
 
     this.producer.on('ready', () => {
@@ -22,6 +27,7 @@ export default class KafkaService {
     });
 
     this.producer.on('error', (error) => {
+      console.error('Something wrong with Kafka Client');
       console.error(error);
     });
   }

@@ -15,12 +15,12 @@
   },
   "scripts": {
     "start:dev": "PORT=3001 react-scripts-ts start",
-    "build": "react-scripts-ts build",
+    "build": "CI=true react-scripts-ts build",
     "test:watch": "react-scripts-ts test --env=jsdom",
     "test": "react-scripts-ts test --env=jsdom --coverage",
     "eject": "react-scripts-ts eject",
     "lint": "tslint --project tsconfig.json --config tslint.json --fix",
-    "docker:build": "npm run build && docker build -t zoltannz/kafka-spark-project-frontend .",
+    "docker:build": "npm run build & docker build -t zoltannz/kafka-spark-project-frontend .",
     "docker:run": "docker run -p 80:80 zoltannz/kafka-spark-project-frontend:latest"
   },
   "devDependencies": {
@@ -35,6 +35,5 @@
     "@types/react-router-dom": "^4.2.6",
     "eslint": "^4.19.1",
     "typescript": "^2.8.1"
-  },
-  "proxy": "http://localhost:3000"
+  }
 }

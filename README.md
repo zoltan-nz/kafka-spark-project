@@ -118,6 +118,10 @@ npm run start:prod
 
 Changing the start script in frontend package.json: `"start": "PORT=3001 react-scripts-ts start"`
 
+### Dockerization
+
+* More details in the subproject's Readme
+
 ## Documentation
 
 * [API framework, Nest.js original README](backend/FRAMEWORK_README.md)

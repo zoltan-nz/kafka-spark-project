@@ -20,12 +20,13 @@ services:
   kafka:
     image: wurstmeister/kafka:latest
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: 172.18.0.5
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_MESSAGE_MAX_BYTES: 2000000
+#      KAFKA_ADVERTISED_HOST_NAME: 192.168.1.2
+      HOSTNAME_COMMAND: "route -n | awk '/UG[ \t]/{print $$2}'"
+      KAFKA_CREATE_TOPICS: "test:1:1"
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
-      LOG4J_LOGGER_KAFKA_AUTHORIZER_LOGGER: DEBUG, authorizerAppender
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
     ports:
       - "9092:9092"
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+      - ./kafka/volumes/docker.sock:/var/run/docker.sock
+      - ./kafka/volumes/kafka:/kafka

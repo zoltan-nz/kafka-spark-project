@@ -22,9 +22,12 @@ services:
     environment:
 #      KAFKA_ADVERTISED_HOST_NAME: 192.168.1.2
       HOSTNAME_COMMAND: "route -n | awk '/UG[ \t]/{print $$2}'"
-      KAFKA_CREATE_TOPICS: "test:1:1"
+      KAFKA_CREATE_TOPICS: "boerse.dev:1:1"
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
       KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
+      KAFKA_ZOOKEEPER_CONNECTION_TIMEOUT_MS: "60000"
+      KAFKA_ZOOKEEPER_SESSION_TIMEOUT_MS: "60000"
+      KAFKA_ZOOKEEPER_SYNC_TIME_MS: "60000"
     ports:
       - "9092:9092"
     volumes:

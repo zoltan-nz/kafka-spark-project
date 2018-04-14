@@ -1,24 +1,43 @@
 version: '3'
 services:
   frontend:
+    container_name: frontend
     build: frontend
     image: zoltannz/kafka-spark-project-frontend:latest
+    depends_on:
+      - kafka-1
+    # network_mode: 'host'
+    # networks:
+      # - default  
     ports:
       - "80:80"
   backend:
+    container_name: backend
     build: backend
     image: zoltannz/kafka-spark-project-backend:latest
+    depends_on:
+      - kafka-1
     environment:
-      KAFKA_CONNECT: kafka:9092
+      KAFKA_CONNECT: kafka-1:9092
       ZOOKEEPER_CONNECT: zookeeper:2181
+    # network_mode: 'host'
+    # networks:
+    #   - default
     ports:
       - "3000:3000"
   zookeeper:
+    container_name: zookeeper
     image: wurstmeister/zookeeper:latest
+    # network_mode: 'host'
+    # networks:
+    #   - default
     ports:
       - "2181:2181"
-  kafka:
+  kafka-1:
+    container_name: kafka-1
     image: wurstmeister/kafka:latest
+    depends_on:
+      - zookeeper
     environment:
 #      KAFKA_ADVERTISED_HOST_NAME: 192.168.1.2
       HOSTNAME_COMMAND: "route -n | awk '/UG[ \t]/{print $$2}'"
@@ -28,8 +47,31 @@ services:
       KAFKA_ZOOKEEPER_CONNECTION_TIMEOUT_MS: "60000"
       KAFKA_ZOOKEEPER_SESSION_TIMEOUT_MS: "60000"
       KAFKA_ZOOKEEPER_SYNC_TIME_MS: "60000"
+    # network_mode: 'host'
+    # networks:
+    #   - default
     ports:
       - "9092:9092"
     volumes:
       - ./kafka/volumes/docker.sock:/var/run/docker.sock
       - ./kafka/volumes/kafka:/kafka
+  kafka-console:
+    container_name: kafka-console
+    image: wurstmeister/kafka:latest
+    depends_on:
+      - kafka-1
+    environment:
+#      KAFKA_ADVERTISED_HOST_NAME: 192.168.1.2
+      HOSTNAME_COMMAND: "route -n | awk '/UG[ \t]/{print $$2}'"
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
+      KAFKA_ZOOKEEPER_CONNECTION_TIMEOUT_MS: "60000"
+      KAFKA_ZOOKEEPER_SESSION_TIMEOUT_MS: "60000"
+      KAFKA_ZOOKEEPER_SYNC_TIME_MS: "60000"
+    # network_mode: 'host'  
+    # networks:
+    #   - default
+    command: "/opt/kafka/bin/kafka-console-consumer.sh --bootstrap-server kafka-1:9092 --topic boerse.dev --from-beginning"
+
+# networks:
+#   default:

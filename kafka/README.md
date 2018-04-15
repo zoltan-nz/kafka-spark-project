@@ -50,14 +50,14 @@ $ docker ps
 Use that name to run a terminal on it.
 
 ```
-$ docker exec -it kafka-spark-project_kafka-console_1 /bin/bash
+$ docker exec -it kafka-console /bin/bash
 ```
 
 Commands for producers and consumers
 
 ```
-$ /opt/kafka/bin/kafka-console-producer.sh --broker-list kafka:9092 --topic boerse.dev
-$ /opt/kafka/bin/kafka-console-consumer.sh --bootstrap-server kafka:9092 --topic boerse.dev --from-beginning
+$ /opt/kafka/bin/kafka-console-producer.sh --broker-list kafka-1:9092 --topic boerse.dev
+$ /opt/kafka/bin/kafka-console-consumer.sh --bootstrap-server kafka-1:9092 --topic boerse.dev --from-beginning
 ```
 
 * Networking in Docker

@@ -8,7 +8,7 @@ services:
       - kafka-1
     # network_mode: 'host'
     # networks:
-      # - default  
+      # - default
     ports:
       - "80:80"
   backend:
@@ -68,10 +68,10 @@ services:
       KAFKA_ZOOKEEPER_CONNECTION_TIMEOUT_MS: "60000"
       KAFKA_ZOOKEEPER_SESSION_TIMEOUT_MS: "60000"
       KAFKA_ZOOKEEPER_SYNC_TIME_MS: "60000"
-    # network_mode: 'host'  
+    # network_mode: 'host'
     # networks:
     #   - default
-    command: "/opt/kafka/bin/kafka-console-consumer.sh --bootstrap-server kafka-1:9092 --topic boerse.dev --from-beginning"
+    command: "/opt/kafka/bin/kafka-console-consumer.sh --bootstrap-server kafka-1:9092 --topic boerse.dev"
   spark-master:
     container_name: spark-master
     image: gettyimages/spark

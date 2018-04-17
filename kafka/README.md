@@ -61,3 +61,12 @@ $ /opt/kafka/bin/kafka-console-consumer.sh --bootstrap-server kafka-1:9092 --top
 ```
 
 * Networking in Docker
+
+??
+
+** Development
+
+```
+$ docker run wurstmeister/zookeeper
+$ docker run wurstmeister/kafka
+```

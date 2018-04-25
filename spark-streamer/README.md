@@ -136,4 +136,6 @@ Exception in thread "main" java.lang.NoClassDefFoundError: org/apache/spark/stre
 
 * How to build Spark: http://spark.apache.org/docs/latest/building-spark.html
 * Similar issue on StackOverflow: https://stackoverflow.com/questions/25904809/spark-kafka-streaming-issue?rq=1
+* My question on StackOverflow: https://stackoverflow.com/questions/50637266/how-could-we-run-the-kafka-example-in-the-official-spark-project
 
+No solution yet.

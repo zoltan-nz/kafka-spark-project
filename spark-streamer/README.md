@@ -9,6 +9,15 @@ $ brew install maven
 $ brew install apache-spark
 ```
 
+Important if you use `jenv`:
+
+```
+$ jenv enable-plugin maven
+$ echo 'JAVA_HOME=$(/usr/libexec/java_home -v $(jenv version-name))' >> ~/.mavenrc
+```
+
+or use maven with `jenv exec`, for example: `jenv exec mvn clean install`
+
 ```
 $ mvn package
 $ spark-submit --class "zoltan.nz.App" --master local[4] target/spark-streamer-1.0-SNAPSHOT.jar

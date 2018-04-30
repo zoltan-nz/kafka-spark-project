@@ -148,3 +148,95 @@ Exception in thread "main" java.lang.NoClassDefFoundError: org/apache/spark/stre
 * My question on StackOverflow: https://stackoverflow.com/questions/50637266/how-could-we-run-the-kafka-example-in-the-official-spark-project
 
 No solution yet.
+
+## Experiment #04 - Trying to add different library
+
+Following the suggested linking description: https://spark.apache.org/docs/latest/streaming-programming-guide.html#linking
+
+I added `spark-streaming-kafka-0-10 2.11` to `pom.xml`.
+Source: https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.apache.spark%22%20AND%20v%3A%222.3.0%22
+
+Updated the `App.java`.
+Source: https://spark.apache.org/docs/latest/streaming-kafka-integration.html
+Source: https://spark.apache.org/docs/latest/streaming-kafka-0-10-integration.html
+
+On this website (https://spark.apache.org/docs/2.2.0/structured-streaming-kafka-integration.html), we can get the following example:
+
+```
+// Subscribe to 1 topic
+DataFrame<Row> df = spark
+  .readStream()
+  .format("kafka")
+  .option("kafka.bootstrap.servers", "host1:port1,host2:port2")
+  .option("subscribe", "topic1")
+  .load()
+df.selectExpr("CAST(key AS STRING)", "CAST(value AS STRING)")
+```
+
+This is not right anymore, because in `v2.3` DataFrame type is not exists anymore.
+
+Reading the DataFrame and Datasets Guide (https://spark.apache.org/docs/latest/sql-programming-guide.html), we can get the following little hint:
+
+
+> In Scala and Java, a DataFrame is represented by a Dataset of Rows. In the Scala API, DataFrame is simply a type alias of Dataset[Row]. While, in Java API, users need to use Dataset<Row> to represent a DataFrame.
+ 
+So we have to use `Dataset<Row>` to make it work.
+
+The following code is almost working:
+
+```java
+package nz.zoltan;
+
+import org.apache.spark.api.java.function.FlatMapFunction;
+import org.apache.spark.sql.Dataset;
+import org.apache.spark.sql.Encoders;
+import org.apache.spark.sql.Row;
+import org.apache.spark.sql.SparkSession;
+import org.apache.spark.sql.streaming.StreamingQuery;
+import org.apache.spark.sql.streaming.StreamingQueryException;
+
+import java.util.Arrays;
+
+public class App {
+
+  public static void main(String[] args) throws StreamingQueryException {
+
+    SparkSession spark = SparkSession
+      .builder()
+      .appName("JavaStructuredNetworkWordCount")
+      .getOrCreate();
+
+    // Create DataFrame representing the stream of input lines from connection to localhost:9999
+    Dataset<Row> df = spark
+      .readStream()
+      .format("kafka")
+      .option("kafka.bootstrap.servers", "localhost:9092")
+      .option("subscribe", "boerse.dev")
+      .load();
+    df.selectExpr("CAST(key AS STRING)", "CAST(value AS STRING)");
+
+    // Split the lines into words
+    Dataset<String> words = df
+      .as(Encoders.STRING())
+      .flatMap((FlatMapFunction<String, String>) x -> Arrays.asList(x.split(" ")).iterator(), Encoders.STRING());
+
+    // Generate running word count
+    Dataset<Row> wordCounts = words.groupBy("value").count();
+
+    // Start running the query that prints the running counts to the console
+    StreamingQuery query = wordCounts.writeStream()
+      .outputMode("complete")
+      .format("console")
+      .start();
+
+    query.awaitTermination();
+  }
+}
+```
+
+Compile and run:
+
+```
+$ mvn clean package
+$ spark-submit --packages org.apache.spark:spark-sql-kafka-0-10_2.11:2.3.0 target/spark-streamer-1.0-SNAPSHOT.jar
+```

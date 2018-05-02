@@ -240,3 +240,16 @@ Compile and run:
 $ mvn clean package
 $ spark-submit --packages org.apache.spark:spark-sql-kafka-0-10_2.11:2.3.0 target/spark-streamer-1.0-SNAPSHOT.jar
 ```
+
+However, the above string would fail, because we get simple text stream from Kafka.
+
+Commenting out most of the code and changing `outputMode`:
+
+```java
+  StreamingQuery query = df.writeStream()
+      .outputMode("append")
+      .format("console")
+      .start();
+```
+
+Finally, the streaming starts working. :D

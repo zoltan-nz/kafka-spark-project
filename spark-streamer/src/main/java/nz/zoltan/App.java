@@ -26,19 +26,21 @@ public class App {
       .option("kafka.bootstrap.servers", "localhost:9092")
       .option("subscribe", "boerse.dev")
       .load();
-    df.selectExpr("CAST(key AS STRING)", "CAST(value AS STRING)");
 
-    // Split the lines into words
-    Dataset<String> words = df
-      .as(Encoders.STRING())
-      .flatMap((FlatMapFunction<String, String>) x -> Arrays.asList(x.split(" ")).iterator(), Encoders.STRING());
 
-    // Generate running word count
-    Dataset<Row> wordCounts = words.groupBy("value").count();
+//    df.selectExpr("CAST(key AS STRING)", "CAST(value AS STRING)");
 
-    // Start running the query that prints the running counts to the console
-    StreamingQuery query = wordCounts.writeStream()
-      .outputMode("complete")
+//    // Split the lines into words
+//    Dataset<String> words = df
+//      .as(Encoders.STRING())
+//      .flatMap((FlatMapFunction<String, String>) x -> Arrays.asList(x.split(" ")).iterator(), Encoders.STRING());
+//
+//    // Generate running word count
+//    Dataset<Row> wordCounts = words.groupBy("value").count();
+//
+//    // Start running the query that prints the running counts to the console
+    StreamingQuery query = df.writeStream()
+      .outputMode("append")
       .format("console")
       .start();
 

@@ -7,8 +7,10 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.streaming.StreamingQuery;
 import org.apache.spark.sql.streaming.StreamingQueryException;
+import org.apache.spark.sql.streaming.StreamingQueryListener;
 
 import java.util.Arrays;
+import java.util.Iterator;
 
 public class App {
 
@@ -17,6 +19,7 @@ public class App {
     SparkSession spark = SparkSession
       .builder()
       .appName("JavaStructuredNetworkWordCount")
+      .config("spark.master", "local")
       .getOrCreate();
 
     // Create DataFrame representing the stream of input lines from connection to localhost:9999

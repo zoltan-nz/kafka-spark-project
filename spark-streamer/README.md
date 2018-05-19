@@ -162,7 +162,7 @@ Source: https://spark.apache.org/docs/latest/streaming-kafka-0-10-integration.ht
 
 On this website (https://spark.apache.org/docs/2.2.0/structured-streaming-kafka-integration.html), we can get the following example:
 
-```
+```java
 // Subscribe to 1 topic
 DataFrame<Row> df = spark
   .readStream()
@@ -253,3 +253,43 @@ Commenting out most of the code and changing `outputMode`:
 ```
 
 Finally, the streaming starts working. :D
+
+## Experiment #05 - Debugging Spark App
+
+* https://stackoverflow.com/questions/30403685/how-can-i-debug-spark-application-locally
+
+```
+spark-submit --conf spark.driver.extraJavaOptions=-agentlib:jdwp=transport=dt_socket,server=y,address=8000,suspend=n --packages org.apache.spark:spark-sql-kafka-0-10_2.11:2.3.0 target/spark-streamer-1.0-SNAPSHOT.jar
+```
+
+## Experiment #06 - Using `local`
+
+Launching Spark in a standalone mode: https://spark.apache.org/docs/latest/submitting-applications.html#master-urls
+
+**Issue**: In case of error like this:
+
+> "java.lang.NoClassDefFoundError: scala/Product$class"
+
+Have to check the Scala maven package version in `pom.xml`.
+
+**Issue**: Cannot find Kafka package.
+
+* Add Apache Maven Shade Plugin for building "uber" package: https://maven.apache.org/plugins/maven-shade-plugin/
+
+And don't miss to add the following dependency:
+
+```xml
+    <dependency>
+      <groupId>org.apache.spark</groupId>
+      <artifactId>spark-sql-kafka-0-10_2.11</artifactId>
+      <version>2.3.0</version>
+    </dependency>
+```
+ 
+## Important!
+
+* For development and debugging, we have to use `local` mode to run our Spark session. 
+
+```
+      .config("spark.master", "local")
+```

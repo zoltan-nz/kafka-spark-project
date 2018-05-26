@@ -293,3 +293,15 @@ And don't miss to add the following dependency:
 ```
       .config("spark.master", "local")
 ```
+
+## Dockerization of a Maven App
+
+Inspirations:
+
+* Java installation based on this [Dockerfile](https://github.com/docker-library/openjdk/blob/dd54ae37bc44d19ecb5be702d36d664fed2c68e4/8/jdk/alpine/Dockerfile)
+* Maven installation based on this [Dockerfile](https://github.com/Zenika/alpine-maven/blob/master/jdk8/Dockerfile)
+
+```java
+$ docker build -t spark-streamer .
+$ docker run spark-streamer:latest mvn exec:java 
+```

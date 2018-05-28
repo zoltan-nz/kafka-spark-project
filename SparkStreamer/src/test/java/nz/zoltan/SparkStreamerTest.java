@@ -1,4 +1,4 @@
-package zoltan.nz;
+package nz.zoltan;
 
 import static org.junit.Assert.assertTrue;
 

@@ -6,10 +6,14 @@ import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.streaming.StreamingQuery;
 import org.apache.spark.sql.streaming.StreamingQueryException;
 
+import java.util.Optional;
+
 
 public class SparkStreamer {
 
-  public static void main(String[] args) throws StreamingQueryException {
+    public static void main(String[] args) throws StreamingQueryException {
+
+    String kafkaServer = Optional.ofNullable(System.getenv("KAFKA_SERVER")).orElse("localhost");
 
     SparkSession spark = SparkSession
       .builder()
@@ -21,7 +25,7 @@ public class SparkStreamer {
     Dataset<Row> df = spark
       .readStream()
       .format("kafka")
-      .option("kafka.bootstrap.servers", "localhost:9092")
+      .option("kafka.bootstrap.servers", kafkaServer + ":9092")
       .option("subscribe", "boerse.dev")
       .load();
 

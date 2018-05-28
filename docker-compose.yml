@@ -5,10 +5,7 @@ services:
     build: frontend
     image: zoltannz/kafka-spark-project-frontend:latest
     depends_on:
-      - kafka-1
-    # network_mode: 'host'
-    # networks:
-      # - default
+      - kafka
     ports:
       - "80:80"
   backend:
@@ -16,30 +13,23 @@ services:
     build: backend
     image: zoltannz/kafka-spark-project-backend:latest
     depends_on:
-      - kafka-1
+      - kafka
     environment:
-      KAFKA_CONNECT: kafka-1:9092
+      KAFKA_CONNECT: kafka:9092
       ZOOKEEPER_CONNECT: zookeeper:2181
-    # network_mode: 'host'
-    # networks:
-    #   - default
     ports:
       - "3000:3000"
   zookeeper:
     container_name: zookeeper
     image: wurstmeister/zookeeper:latest
-    # network_mode: 'host'
-    # networks:
-    #   - default
     ports:
       - "2181:2181"
-  kafka-1:
-    container_name: kafka-1
+  kafka:
+    container_name: kafka
     image: wurstmeister/kafka:latest
     depends_on:
       - zookeeper
     environment:
-#      KAFKA_ADVERTISED_HOST_NAME: 192.168.1.2
       HOSTNAME_COMMAND: "route -n | awk '/UG[ \t]/{print $$2}'"
       KAFKA_CREATE_TOPICS: "boerse.dev:1:1"
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
@@ -47,11 +37,9 @@ services:
       KAFKA_ZOOKEEPER_CONNECTION_TIMEOUT_MS: "60000"
       KAFKA_ZOOKEEPER_SESSION_TIMEOUT_MS: "60000"
       KAFKA_ZOOKEEPER_SYNC_TIME_MS: "60000"
-    # network_mode: 'host'
-    # networks:
-    #   - default
     ports:
       - "9092:9092"
+    hostname: "kafka"
     volumes:
       - ./kafka/volumes/docker.sock:/var/run/docker.sock
       - ./kafka/volumes/kafka:/kafka
@@ -59,35 +47,27 @@ services:
     container_name: kafka-console
     image: wurstmeister/kafka:latest
     depends_on:
-      - kafka-1
+      - kafka
     environment:
-#      KAFKA_ADVERTISED_HOST_NAME: 192.168.1.2
       HOSTNAME_COMMAND: "route -n | awk '/UG[ \t]/{print $$2}'"
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
       KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
       KAFKA_ZOOKEEPER_CONNECTION_TIMEOUT_MS: "60000"
       KAFKA_ZOOKEEPER_SESSION_TIMEOUT_MS: "60000"
       KAFKA_ZOOKEEPER_SYNC_TIME_MS: "60000"
-    # network_mode: 'host'
-    # networks:
-    #   - default
-    command: "/opt/kafka/bin/kafka-console-consumer.sh --bootstrap-server kafka-1:9092 --topic boerse.dev"
-  spark-master:
-    container_name: spark-master
-    image: gettyimages/spark
-    command: bin/spark-class org.apache.spark.deploy.master.Master -h spark-master
-    hostname: spark-master
+    command: "/opt/kafka/bin/kafka-console-consumer.sh --bootstrap-server kafka:9092 --topic boerse.dev"
+  spark-streamer:
+    container_name: spark-streamer
+    build: SparkStreamer
+    image: zoltannz/kafka-spark-project-spark-streamer:latest
+    depends_on:
+      - kafka
+    command: mvn exec:java
+    hostname: spark-streamer
     environment:
-      MASTER: spark://spark-master:7077
-      SPARK_CONF_DIR: /spark/conf
-      SPARK_PUBLIC_DNS: localhost
+      KAFKA_SERVER: kafka
     expose:
-      - 7001
-      - 7002
-      - 7003
-      - 7004
-      - 7005
-      - 7006
+      - 4040
       - 7077
       - 6066
     ports:
@@ -95,35 +75,3 @@ services:
       - 6066:6066
       - 7077:7077
       - 8080:8080
-    volumes:
-      - ./conf/master:/conf
-      - ./data:/tmp/data
-  spark-worker:
-    container_name: spark-worker
-    image: gettyimages/spark
-    command: bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077
-    hostname: spark-worker
-    environment:
-      SPARK_CONF_DIR: /spark/conf
-      SPARK_WORKER_CORES: 2
-      SPARK_WORKER_MEMORY: 1g
-      SPARK_WORKER_PORT: 8881
-      SPARK_WORKER_WEBUI_PORT: 8081
-      SPARK_PUBLIC_DNS: localhost
-    links:
-      - spark-master
-    expose:
-      - 7012
-      - 7013
-      - 7014
-      - 7015
-      - 7016
-      - 8881
-    ports:
-      - 8081:8081
-    volumes:
-      - ./spark/conf/worker:/conf
-      - ./spark/data:/tmp/data
-
-# networks:
-#   default:

@@ -303,5 +303,10 @@ Inspirations:
 
 ```java
 $ docker build -t spark-streamer .
-$ docker run spark-streamer:latest mvn exec:java 
+$ docker run spark-streamer:latest mvn exec:java
+```
+
+Using host machine maven repository:
+```
+$docker run -v "$HOME/.m2":/root/.m2 spark-streamer:latest mvn exec:java 
 ```

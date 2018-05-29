@@ -8,12 +8,13 @@
   },
   "scripts": {
     "start": "docker-compose up",
-    "setup": "npm install && cd ./backend && npm install && cd ../frontend && npm install",
+    "setup": "npm install && cd ./backend && npm install && cd ../frontend && npm install && cd ./SparkStreamer && mvn clean install",
     "clean:kafka": "del ./kafka/logs ./kafka/zookeeper",
     "start:kafka": "npm run clean:kafka && zookeeper-server-start ./kafka/config/zookeeper.properties & kafka-server-start ./kafka/config/server.properties",
     "start:backend": "cd ./backend && npm run start:dev",
     "start:frontend": "cd ./frontend && npm run start:dev",
-    "start:dev": "concurrently -k --names 'KAFKA,BACKEND,FRONTEND' 'npm run start:kafka' 'npm run start:backend' 'npm run start:frontend'",
+    "start:spark": "cd ./SparkStreamer && mvn clean install && mvn exec:java",
+    "start:dev": "concurrently -k --allow-restart --names 'KAFKA,BACKEND,FRONTEND,SPARK' --prefix-colors 'yellow,blue,magenta,cyan' 'npm run start:kafka' 'npm run start:backend' 'npm run start:frontend' 'npm run start:spark'",
     "docker:build": "cd ./backend & npm run docker:build & cd ../frontend & npm run docker:build",
     "test": "cd ./backend && npm run test && cd ../frontend && npm run test"
   },

@@ -13,9 +13,14 @@ Running components in separated docker container.
 
 ## Development
 
+You can run all component locally, easy to debug and adding new feature.
+
 Prerequisites:
-* Locally installed Node.js
+* Locally installed Node.js ([How to Install Node.js](http://yoember.com/nodejs/the-best-way-to-install-node-js/))
+* Locally installed Java 8 and Maven 3.5
 * Locally installed Kafka with Zookeeper
+* Locally installed Spark
+
 
 ```
 $ npm run setup

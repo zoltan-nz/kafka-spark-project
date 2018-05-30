@@ -41,6 +41,8 @@ Getting the list of keys of a bucket documentation: https://docs.aws.amazon.com/
 
 Deutsche Borse S3 dataset GitHub: https://github.com/Deutsche-Boerse/dbg-pds
 
+CSV columns: https://github.com/Deutsche-Boerse/dbg-pds/blob/master/docs/data_dictionary.md#eurex
+
 Use EUREX data, it is up-to-date.
 
 https://s3.eu-central-1.amazonaws.com/deutsche-boerse-eurex-pds/?list-type=2&continuation-token=

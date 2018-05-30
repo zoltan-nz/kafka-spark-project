@@ -10,7 +10,7 @@
   "scripts": {
     "lint": "tslint --project ./tsconfig.json --fix",
     "start": "ts-node -r tsconfig-paths/register src/main.ts",
-    "start:dev": "KAFKA_CONNECT=localhost:9092 nodemon",
+    "start:dev": "KAFKA_CONNECT=localhost:9092 nodemon --watch src",
     "build": "rm -rf dist && tsc",
     "prestart:prod": "npm run build",
     "start:prod": "node dist/main.js",

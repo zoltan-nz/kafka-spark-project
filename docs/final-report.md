@@ -17,10 +17,33 @@ You can run this project on your local machine if all the required development t
 
 # Architecture
 
-The following graph help us to see the different component of this project.
+## Motivation
+
+The original motivation was to build a cluster which can accept streaming data, can process it, modify and analyse it. The practicality is to create a dashboard platform where a user friendly, visualized environment help for the user to deal with a naturally complex and difficult to understand data stream.   
+
+## System components
+
+In modern architecture, the user interaction exposed to a frontend web application. The web application connects to a server based backend API, which has access to other part of a cluster. That cluster should be scalable and should manage high volume of data flow.  
+
+The following graph help us to see the individual components of this project and how they connect together.
 
 Main components:
 * Frontend application
+* Backend application
+* Apache Kafka server
+* Apache Spark application
+
+![Main components](./images/docker-compose-diagram.jpeg)
+
+# Implementation
+
+## Frontend Application
+
+## Backend Application
+
+## Kafka Cluster
+
+## Spark Application
 
 # Appendix 1 - Original project proposal
 
@@ -69,7 +92,7 @@ Main components:
 * Optionally using Kubernetes to manage containers and deployment
 * Tools: Apache Kafka, Apache Spark, Node.js, Cassandra (preferred, maybe MongoDB)
 
-# Notes about finding financial data stream
+# Appendix 2 - Notes about finding financial data stream
 
 * Option 1: crypto currency data stream: https://min-api.cryptocompare.com/
 * Option 2: Deutsche Borse Public Dataset: https://aws.amazon.com/public-datasets/deutsche-boerse-pds/

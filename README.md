@@ -1,135 +1,61 @@
 # Apache Kafka and Apache Spark Project
 
+(For detailed project report, please check out [The Project Report](docs/final-report.md).)
+
 ## Running the project
+
+You can try out this project running all components in a docker composed cluster, each component will run in a separated container and they will be connected with the default network inside the compose cluster.
 
 Prerequisites:
 * Docker
+* Port 80 should be available or change the mapping of the `frontend` app in `docker-compose.yml`
 
-```
-$ npm start
-```
+Run the project:
+* Clone this repository on your computer
+* Fire up the docker compose cluster:
+    
+```    
+$ docker-compose up
+```    
+    
+* Open the frontend application in your browser: `$ open http://localhost:80`
 
-Running components in separated docker container.
+## Run the project in developer mode
 
-## Development
+You can run all components locally. In this way you can easily debug and add new features.
 
-You can run all component locally, easy to debug and adding new feature.
+**Prerequisites:**
 
-Prerequisites:
 * Locally installed Node.js ([How to Install Node.js](http://yoember.com/nodejs/the-best-way-to-install-node-js/))
 * Locally installed Java 8 and Maven 3.5
-* Locally installed Kafka with Zookeeper
-* Locally installed Spark
+* Locally installed Kafka with Zookeeper ([Kafka Quickstart](https://kafka.apache.org/quickstart))
+* Locally installed Spark ([Install Spark](http://spark.apache.org/downloads.html))
 
+The `setup` npm script install individual packages and prepare your project. The `start:dev` will run all component's development script concurrently in the same terminal. 
 
 ```
 $ npm run setup
 $ npm start:dev
 ```
 
-Start the project in developer mode and run locally instead in docker container.
+## Documents
 
-## Run test
-
-```
-$ npm run test
-```
-
-## Project proposal
-
-* [Proposal](docs/proposal.md)
+* [Final Report](docs/final-report.md)
+* [Original project proposal](docs/proposal.md)
 * [Notes about finding datasource](docs/finding-datastream-notes.md)
 
-## Project components
+## Component's README files
 
 * [Backend](backend/README.md)
+* [API framework, Nest.js original README](backend/FRAMEWORK_README.md)
 * [Frontend](frontend/README.md)
+* [Frontend framework, React.js original README](frontend/FRAMEWORK_README.md)
 * [Kafka](kafka/README.md)
+* [SparkStreamer](SparkStreamer/README.md)
 
-## Research
-
-### Useful links
+## Useful links
 
 * [Awesome Streaming](https://github.com/manuzhang/awesome-streaming)
 * [Exactly-once Support in Apache Kafka](https://medium.com/@jaykreps/exactly-once-support-in-apache-kafka-55e1fdd0a35f)
 * [Understanding When to use RabbitMQ or Apache Kafka](https://content.pivotal.io/blog/understanding-when-to-use-rabbitmq-or-apache-kafka)
 * [Why need Zookeeper for Kafka?](https://www.quora.com/What-is-the-actual-role-of-Zookeeper-in-Kafka-What-benefits-will-I-miss-out-on-if-I-don%E2%80%99t-use-Zookeeper-and-Kafka-together)
-
-# Deutsche Boerse Public Dataset Downloader
-
-> Data source: https://aws.amazon.com/public-datasets/deutsche-boerse-pds/
-
-The main goal of this service that user can select a day and the selected day's data will be streamed by a Streaming Service. 
-
-## Backend
-
-Requirements:
- 
-* Download the directory of the csv files
-* Download the selected for streaming
-* Downloaded raw datafiles will be stored in Volume instance inside a Kubernetes cluster
-
-Backend framework: [Nest.js](https://nestjs.com/) with TypeScript
-
-## Frontend
-
-* Select a date for streaming
-
-Frontend framework: [React.js with TypeScript](https://github.com/wmonk/create-react-app-typescript/blob/master/packages/react-scripts/template/README.md)
-
-## Implementation Log
-
-
-### Create frontend app
-
-```
-$ npm install -g create-react-app
-$ create-react-app db-downloader-frontend --scripts-version=react-scripts-ts
-```
-
-Start frontend app
-
-```
-$ cd ./db-downloader-frontend
-$ npm start
-```
-
-### Create backend API
-
-```
-$ git clone https://github.com/nestjs/typescript-starter.git db-downloader-backend
-$ cd db-downloader-backend
-$ rm -rf .git
-$ npm i
-```
-
-development
-```
-$ npm run start
-```
-
-watch mode
-```
-$ npm run start:dev
-$ open http://localhost:3000
-```
-
-production mode
-```
-npm run start:prod
-```
-
-### Changing development port
-
-Changing the start script in frontend package.json: `"start": "PORT=3001 react-scripts-ts start"`
-
-### Dockerization
-
-* More details in the subproject's Readme
-
-## Documentation
-
-* [API framework, Nest.js original README](backend/FRAMEWORK_README.md)
-* [Frontend framework, React.js original README](frontend/FRAMEWORK_README.md)
-* [Backend documentation](backend/README.md)
-* [Frontend documentation](frontend/README.md)

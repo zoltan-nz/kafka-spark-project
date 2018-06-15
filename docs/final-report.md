@@ -1,7 +1,7 @@
 ENGR 440 - Report of Distributed Streaming Project
 ===
 
-Zoltan Debre (300360191)
+Author: [Zoltan Debre](http://zoltan.nz) (300360191) - [Victoria University of Wellington](https://www.victoria.ac.nz/), New Zealand
 
 # Abstract
 
@@ -11,7 +11,7 @@ Our distributed streaming platform is [Apache Kafka](https://kafka.apache.org/),
 
 Data source is a freely available financial data stream. The German Stock Exchange daily transaction history is available on an S3 bucket and it is part of the [Amazon Open Data Registry](https://registry.opendata.aws/).
 
-This implementation provides a user interface for downloading and preparing csv files. Furthermore we can select a prepared csv data file as data source for streaming. The streamed data flow consumed by a channel in our Kafka environment. This topic is watched by our Apache Spark app, which can process, aggregate, modify our distributed data flow.
+This implementation provides a user interface for downloading and preparing csv files. Furthermore we can select a prepared csv data file as data source for streaming. The streamed data flow consumed by a channel in our Kafka environment. This Kafka topic is watched by our Apache Spark app, which may process, aggregate, modify our distributed data flow.
 
 You can run this project on your local machine if all the required development tool is available and locally installed, or you can just fire up a docker composer process to run all component in an isolated docker cluster. 
 
@@ -23,7 +23,7 @@ The original motivation was to build a cluster which can accept streaming data, 
 
 ## System components
 
-In modern architecture, the user interaction exposed to a frontend web application. The web application connects to a server based backend API, which has access to other part of a cluster. That cluster should be scalable and should manage high volume of data flow.  
+In modern cloud based architecture, the user interaction exposed to a frontend web application. The web application connects to a server based backend API, which has access to other part of the cluster. This cluster should be scalable and should manage high frequency data flow.  
 
 The following graph help us to see the individual components of this project and how they connect together.
 
@@ -38,6 +38,74 @@ Main components:
 # Implementation
 
 ## Frontend Application
+
+# Deutsche Boerse Public Dataset Downloader
+
+> Data source: https://aws.amazon.com/public-datasets/deutsche-boerse-pds/
+
+The main goal of this service that user can select a day and the selected day's data will be streamed by a Streaming Service. 
+
+## Backend
+
+Requirements:
+ 
+* Download the directory of the csv files
+* Download the selected for streaming
+* Downloaded raw datafiles will be stored in Volume instance inside a Kubernetes cluster
+
+Backend framework: [Nest.js](https://nestjs.com/) with TypeScript
+
+## Frontend
+
+* Select a date for streaming
+
+Frontend framework: [React.js with TypeScript](https://github.com/wmonk/create-react-app-typescript/blob/master/packages/react-scripts/template/README.md)
+
+## Implementation Log
+
+
+### Create frontend app
+
+```
+$ npm install -g create-react-app
+$ create-react-app db-downloader-frontend --scripts-version=react-scripts-ts
+```
+
+Start frontend app
+
+```
+$ cd ./db-downloader-frontend
+$ npm start
+```
+
+### Create backend API
+
+```
+$ git clone https://github.com/nestjs/typescript-starter.git db-downloader-backend
+$ cd db-downloader-backend
+$ rm -rf .git
+$ npm i
+```
+
+development
+```
+$ npm run start
+```
+
+watch mode
+```
+$ npm run start:dev
+$ open http://localhost:3000
+```
+
+production mode
+```
+npm run start:prod
+```
+
+### Changing development port
+
+Changing the start script in frontend package.json: `"start": "PORT=3001 react-scripts-ts start"`
 
 ## Backend Application
 

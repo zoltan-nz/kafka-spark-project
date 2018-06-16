@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "docker-compose up",
-    "setup": "npm install && cd ./backend && npm install && cd ../frontend && npm install && cd ./SparkStreamer && mvn clean install",
+    "setup": "npm install && cd ./backend && npm install && cd ../frontend && npm install && cd ../SparkStreamer && mvn clean install",
     "clean:kafka": "del ./kafka/logs ./kafka/zookeeper",
     "start:kafka": "npm run clean:kafka && zookeeper-server-start ./kafka/config/zookeeper.properties & kafka-server-start ./kafka/config/server.properties",
     "start:backend": "cd ./backend && npm run start:dev",

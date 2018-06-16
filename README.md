@@ -1,6 +1,6 @@
-# Apache Kafka and Apache Spark Project
+# Apache Kafka and Apache Spark - A Distributed Streaming Project
 
-(For detailed project report, please check out [The Project Report](docs/final-report.md).)
+For detailed project report, please check out [The Project Report](docs/final-report.md). ;)
 
 ## Running the project
 
@@ -8,7 +8,7 @@ You can try out this project running all components in a docker composed cluster
 
 Prerequisites:
 * Docker
-* Port 80 should be available or change the mapping of the `frontend` app in `docker-compose.yml`
+* Port 80 should be available or change the port mapping of the `frontend` app in `docker-compose.yml`
 
 Run the project:
 * Clone this repository on your computer
@@ -31,18 +31,18 @@ You can run all components locally. In this way you can easily debug and add new
 * Locally installed Kafka with Zookeeper ([Kafka Quickstart](https://kafka.apache.org/quickstart))
 * Locally installed Spark ([Install Spark](http://spark.apache.org/downloads.html))
 
-The `setup` npm script install individual packages and prepare your project. The `start:dev` will run all component's development script concurrently in the same terminal. 
+The `setup` npm script will install individual packages and prepare the project for you. The `start:dev` will run all component's development script concurrently in the same terminal. 
 
 ```
 $ npm run setup
-$ npm start:dev
+$ npm run start:dev
 ```
 
 ## Documents
 
 * [Final Report](docs/final-report.md)
 * [Original project proposal](docs/proposal.md)
-* [Notes about finding datasource](docs/finding-datastream-notes.md)
+* [Notes about datasources](docs/finding-datastream-notes.md)
 
 ## Component's README files
 

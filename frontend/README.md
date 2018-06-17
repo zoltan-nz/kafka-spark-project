@@ -1,10 +1,11 @@
 # DB Downloader Frontend API
 
-Next steps:
-* Add material design
-* Check backend availability
-* Add calendar widget
-* Send the selected date to the backend
+Implementation steps:
+
+- [x] Add material design
+- [x] Check backend availability
+- [x] Add calendar widget
+- [x] Send the selected date to the backend
 
 ## Material Design
 

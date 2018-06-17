@@ -13,7 +13,29 @@ Data source is a freely available financial data stream. The German Stock Exchan
 
 This implementation provides a user interface for downloading and preparing csv files. Furthermore we can select a prepared csv data file as data source for streaming. The streamed data flow consumed by a channel in our Kafka environment. This Kafka topic is watched by our Apache Spark app, which may process, aggregate, modify our distributed data flow.
 
-You can run this project on your local machine if all the required development tool is available and locally installed, or you can just fire up a docker composer process to run all component in an isolated docker cluster. 
+You can run this project on your local machine if all the required development tool is available and locally installed, or you can just fire up a docker composer process to run all component in an isolated docker cluster.
+
+## Challenges and achievement
+
+During the implementation I learned a lot about the following new technologies, frameworks and programming languages. It was really useful that my learning process was driven by an experiment, an application building project. It means I read a lots of documentation, played with examples and tutorials and finally I adopted and implemented in the project.
+
+* React.js
+* TypeScript
+* Nginx configuration
+* Node.js Streaming
+* Nest.js Framework
+* Apache Kafka
+* Apache Spark
+* Scala
+* Maven configuration
+* Docker Compose
+
+One of a great achievement is a contribution to the open source community. During the implementation, I realized the Node.js Kafka connector TypeScript type definition is not up to date, so I proposed an update. It is part now the main Kafka Connector for Node.js.
+
+Related commits and pull requests:
+* https://github.com/SOHU-Co/kafka-node/pull/959/commits/9d878c88616f12c302d76cdfd1d05d56de2b7ace
+* https://github.com/SOHU-Co/kafka-node/pull/959
+* https://github.com/SOHU-Co/kafka-node/pull/965
 
 # Architecture
 
@@ -143,6 +165,28 @@ For a simple experiment, it is enough to download only one or two csv files manu
 
 ## Frontend Application
 
+The frontend application is a single page app. We use React.js view library for building this simple interface.
+
+At this stage the following features are implemented:
+
+* Select date for downloading CSV data set from S3 buckets.
+* Select concatenated csv files and start streaming.
+* Sending heartbeat requests to checking the backend availability. 
+
+The boilerplate of this application is created by using `Create React App for TypeScript`: https://github.com/wmonk/create-react-app-typescript
+
+The frontend application components are based on Material UI component library: https://material-ui.com/
+
+The app uses `react-router` version 4 and `axios` for managing ajax requests.
+
+We can build a docker container also. It uses the production build of the React app. Basically, it is a simply static web content (html, css, js). We need a webserver for accessing these files. The docker container is a light `nginx` container, based on `nginx:alpine` package. Please note, `nginx.conf` file contains a `proxy_pass` configuration, which redirect `/api` targeted requests to a different port, in this cast to the backend.   
+
+```
+        location /api {
+          proxy_pass http://backend:3000;
+        }
+```        
+
 # Deutsche Boerse Public Dataset Downloader
 
 > Data source: https://aws.amazon.com/public-datasets/deutsche-boerse-pds/
@@ -159,28 +203,7 @@ Requirements:
 
 Backend framework: [Nest.js](https://nestjs.com/) with TypeScript
 
-## Frontend
 
-* Select a date for streaming
-
-Frontend framework: [React.js with TypeScript](https://github.com/wmonk/create-react-app-typescript/blob/master/packages/react-scripts/template/README.md)
-
-## Implementation Log
-
-
-### Create frontend app
-
-```
-$ npm install -g create-react-app
-$ create-react-app db-downloader-frontend --scripts-version=react-scripts-ts
-```
-
-Start frontend app
-
-```
-$ cd ./db-downloader-frontend
-$ npm start
-```
 
 ### Create backend API
 

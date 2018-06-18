@@ -173,70 +173,196 @@ At this stage the following features are implemented:
 * Select concatenated csv files and start streaming.
 * Sending heartbeat requests to checking the backend availability. 
 
-The boilerplate of this application is created by using `Create React App for TypeScript`: https://github.com/wmonk/create-react-app-typescript
+Most important external packages:
 
-The frontend application components are based on Material UI component library: https://material-ui.com/
-
-The app uses `react-router` version 4 and `axios` for managing ajax requests.
+* The boilerplate of this application is created by using `Create React App for TypeScript`: https://github.com/wmonk/create-react-app-typescript
+* The frontend application components are based on Material UI component library: https://material-ui.com/
+* The app uses `react-router` version 4 and `axios` for managing ajax requests.
 
 We can build a docker container also. It uses the production build of the React app. Basically, it is a simply static web content (html, css, js). We need a webserver for accessing these files. The docker container is a light `nginx` container, based on `nginx:alpine` package. Please note, `nginx.conf` file contains a `proxy_pass` configuration, which redirect `/api` targeted requests to a different port, in this cast to the backend.   
 
 ```
-        location /api {
-          proxy_pass http://backend:3000;
-        }
-```        
-
-# Deutsche Boerse Public Dataset Downloader
-
-> Data source: https://aws.amazon.com/public-datasets/deutsche-boerse-pds/
-
-The main goal of this service that user can select a day and the selected day's data will be streamed by a Streaming Service. 
-
-## Backend
-
-Requirements:
- 
-* Download the directory of the csv files
-* Download the selected for streaming
-* Downloaded raw datafiles will be stored in Volume instance inside a Kubernetes cluster
-
-Backend framework: [Nest.js](https://nestjs.com/) with TypeScript
-
-
-
-### Create backend API
-
-```
-$ git clone https://github.com/nestjs/typescript-starter.git db-downloader-backend
-$ cd db-downloader-backend
-$ rm -rf .git
-$ npm i
+location /api {
+  proxy_pass http://backend:3000;
+}
 ```
 
-development
+**Screenshots**
+
+Home page with the heartbeat indicator:
+
+![Frontend Home Page](./images/frontend-home-page.png)
+
+Downloader page:
+
+![Downloader page](./images/frontend-downloader.png)
+
+Date picker:
+
+![Date picker](./images/frontend-date-picker.png)
+
+List of downloaded csv files. Clicking one of them start the streaming process in the background.
+
+![Start streaming](./images/frontend-streamer.png)
+
+During development we can use the following `npm` scripts:
+
 ```
-$ npm run start
+  "scripts": {
+    "start:dev": "PORT=3001 react-scripts-ts start",
+    "build": "CI=true react-scripts-ts build",
+    "test:watch": "react-scripts-ts test --env=jsdom",
+    "test": "react-scripts-ts test --env=jsdom --coverage",
+    "eject": "react-scripts-ts eject",
+    "lint": "tslint --project tsconfig.json --config tslint.json --fix",
+    "docker:build": "npm run build & docker build -t zoltannz/kafka-spark-project-frontend .",
+    "docker:run": "docker run -p 80:80 zoltannz/kafka-spark-project-frontend:latest"
+  },
 ```
 
-watch mode
-```
-$ npm run start:dev
-$ open http://localhost:3000
-```
+`$ npm run start:dev` - for launching the development server
 
-production mode
-```
-npm run start:prod
-```
+`$ npm run build` - building production code
 
-### Changing development port
+`$ npm run test:watch` - start watch script for tests
 
-Changing the start script in frontend package.json: `"start": "PORT=3001 react-scripts-ts start"`
+`$ npm run test` - running tests once
+
+`$ npm run eject` - create react app script to build custom Webpack configuration
+
+`$ npm run lint` - running TypeScript linter: `tslint`
+
+`$ npm run docker:build` - building individual docker container with the production code
+
+`$ npm run docker:run` - running the docker container and connect the webapp to port 80
+
+
+**Important links**
+
+* React.js documentation: https://reactjs.org/docs/try-react.html
+* Create React App for TypeScript User Guide: https://github.com/wmonk/create-react-app-typescript/blob/master/packages/react-scripts/template/README.md
+* TypeScript: https://www.typescriptlang.org/docs/home.html
+* TSLint: https://palantir.github.io/tslint/
+* Material UI: https://material-ui.com/
+* Axios: https://github.com/axios/axios
+* Moment.js: https://momentjs.com/
+* Jest: https://facebook.github.io/jest/
 
 ## Backend Application
 
+The main goal of this service that user can select a day and the selected day's data will be streamed by a Streaming Service. 
+
+Implemented features so far:
+ 
+* Listening for a heartbeat request on `api/heartbeat` endpoint.
+* Accepting `POST` request on `api/downloader` endpoint with a payload which contains a date. 
+* Connecting to Amazon AWS S3 bucket.
+* Download csv files from S3 bucket based on the requested date.
+* Concatenate downloaded csv files to one file.
+* Providing a list for frontend about available csv files on `api/data-files` `GET` request.
+* Accepting `POST` request on `api/data-files` and start streaming.
+* Connecting to Apache Kafka client for streaming
+
+Most important external packages:
+
+* For the implementation, I picked a TypeScript based Node.js framework `Nest.js`: https://nestjs.com/ (I haven't used this framework before, however it has nice abstractions for building lightweight API services.)
+* For connecting to Apache Kafka server the most up to date and maintained Kafka Connector package is `kafka-node`: https://github.com/SOHU-Co/kafka-node
+* The `kafka-node` package TypeScript support was not up to date, so as a result of this project, I contributed and updated the open source package.
+
+The Docker container of this app uses `node:alpine` container.
+
+**Implemented endpoints**
+
+| URL | Type | Payload | Description |
+|---|---|---|---|
+| http://localhost:3000/ | `GET` | | Response `200` with a backend server is running message. |
+| http://localhost:3000/api/heartbeat | `GET` | | Response `200` for checking the server is live | 
+| http://localhost:3000/api/downloader | `POST` | date: DATE | Call S3 downloader service to download and concatenate the given day's csv files. |
+| http://localhost:3000/api/data-files | `GET` | | Response an Array of filenames, which point to the downloaded and concatenated csv files. |
+| http://localhost:3000/api/data-files | `POST` | fileName: STRING | Posted filename will be selected and streamed to Kafka |  
+
+**NPM scripts**
+
+```
+  "scripts": {
+    "lint": "tslint --project ./tsconfig.json --fix",
+    "start": "ts-node -r tsconfig-paths/register src/main.ts",
+    "start:dev": "KAFKA_CONNECT=localhost:9092 nodemon --watch src",
+    "build": "rm -rf dist && tsc",
+    "prestart:prod": "npm run build",
+    "start:prod": "node dist/main.js",
+    "test:watch": "jest --watch",
+    "test": "jest --coverage",
+    "docker:build": "npm run build && docker build -t zoltannz/kafka-spark-project-backend .",
+    "docker:run": "docker run -p 3000:3000 zoltannz/kafka-spark-project-backend:latest"
+  },
+```
+
+`npm run lint` - running TypeScript linter: `tslint`
+
+`npm run start` - start the application with running `src/main.ts` file with `ts-node`
+
+`npm run start:dev` - start the application with `nodemon`
+
+`npm run build` - compile TypeScript to standard JavaScript
+
+`npm run start:prod` - build the project and run the standard JavaScript version
+
+`npm run test:watch` - run `jest` in watch mode
+
+`npm run test` - run `jest` for testing
+
+`npm run docker:build` - building the project and create a new docker image
+
+`npm run docker:run` - running the related latest docker image 
+
+**Important links**
+
+* Nest.js: https://nestjs.com/
+* Kafka Node: https://github.com/SOHU-Co/kafka-node
+ 
 ## Kafka Cluster
+
+We use Apache Kafka for consuming and streaming data flow. In our implementation we use a third party docker container to run `Zookeeper` and `Kafka`. You can find a `kafka` folder in our project, however, it is only a placeholder for temporary data which can be produced by the Docker container.
+
+Apache Kafka container repository: * https://github.com/wurstmeister/kafka-docker 
+
+The first step is always reading the official documentation. This is important, we cannot skip it.
+
+https://kafka.apache.org/documentation/#gettingStarted
+
+It is highly recommended to install an Apache Kafka instance on your local machine and play with it from your terminal to understand how the producers and consumers work.
+
+Please note, if you run Apache Kafka in a Docker Compose cluster, on Mac OSX, you cannot access to the Kafka server from outside of the cluster, so you have to run a separated console in the cluster and connect to that container with `docker exec`. In our implementation, after you run `docker-compose up`, you can access to the Kafka instance with the following way:
+
+Check the name of the kafka instance for the console.
+
+```
+$ docker ps
+```
+
+Use the kafka-console container's name to run a terminal inside the Docker Compose network. (In our case the docker instance name should be `kafka-console`.)
+
+```
+$ docker exec -it kafka-console /bin/bash
+```
+
+You can use the following commands for running producer or consumer:
+
+```
+$ /opt/kafka/bin/kafka-console-producer.sh --broker-list kafka-1:9092 --topic boerse.dev
+$ /opt/kafka/bin/kafka-console-consumer.sh --bootstrap-server kafka-1:9092 --topic boerse.dev --from-beginning
+```
+
+On Linux, you should be able to access to the Kafka instance from your host computer. Try it out.
+
+Please note, we use one Apache Kafka topic in our implementation: `boerse.dev`
+
+**Important links**
+
+* Apache Kafka: https://kafka.apache.org/
+* Apache Zookeeper: https://zookeeper.apache.org/
+* Kafka Docker: https://hub.docker.com/r/wurstmeister/kafka/
 
 ## Spark Application
 
@@ -286,148 +412,3 @@ Changing the start script in frontend package.json: `"start": "PORT=3001 react-s
 * Each component containerized with Docker
 * Optionally using Kubernetes to manage containers and deployment
 * Tools: Apache Kafka, Apache Spark, Node.js, Cassandra (preferred, maybe MongoDB)
-
-# DB Downloader Frontend API
-
-Next steps:
-* Add material design
-* Check backend availability
-* Add calendar widget
-* Send the selected date to the backend
-
-## Material Design
-
-Popular Material Design Addon: [Material-UI](http://www.material-ui.com/#/)
-
-```
-$ npm i -S material-ui typeface-roboto
-$ npm i -D @types/material-ui
-```
-
-Add `import 'typeface-roboto';` to `src/index.tsx`.
-
-Simple material button in `App.tsx`:
-
-```
-import * as React from 'react';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import RaisedButton from 'material-ui/RaisedButton';
-
-import './App.css';
-
-class App extends React.Component {
-  render() {
-    return (
-      <MuiThemeProvider>
-        <RaisedButton label="Default"/>
-      </MuiThemeProvider>
-    );
-  }
-}
-
-export default App;
-```
-
-* State and Prop management
-* Change event
-* Click event
-* Ajax library
-
-## Add Footer and check server status
-
-* Create a new component: `Footer`
-* Using `axios` to check server availability.
-
-## Restructuring default layout
-
-* Separate code in subfolders.
-* Update Material UI
-
-## Add router
-
-* react-router v4
-
-## Docker build
-
-* Using `nginx:alpine`
-* Add nginx configuration
-
-```
-$ docker build -t zoltannz/kafka-spark-project-frontend .
-```
-
-# DB Downloader Backend API
-
-Next steps:
-* Add `GET http://localhost:3000/api/heartbeat` endpoint and respond with `200`
-* Add `POST http://localhost:3000/api/download-date` endpoint and download raw data
-
-## Implementation Log
-
-* Install `cors` package and added to Express.
-* Create `heartbeat.controller.ts`
-* Add controller to the `app.module.ts`
-* Accept POST request on `/api/downloader`
-
-## Amazon AWS S3 downloader
-
-https://aws.amazon.com/sdk-for-node-js/
-
-```
-$ npm install -S aws-sdk
-```
-
-Add credentials to `~/.aws/credentials`
-
-```
-[default]
-aws_access_key_id =
-aws_secret_access_key =
-```
-
-CSV example:
-
-`s3://deutsche-boerse-eurex-pds/2018-02-14/2018-02-14-BINS-XEUR13.csv`
-
-GET example for a csv:
-
-https://s3.eu-central-1.amazonaws.com/deutsche-boerse-eurex-pds/2017-05-01/2017-05-01_BINS_XEUR00.csv
-https://s3.eu-central-1.amazonaws.com/deutsche-boerse-eurex-pds/2018-02-14/2018-02-14-BINS-XEUR13.csv
-
-
-Getting the list of keys of a bucket documentation: https://docs.aws.amazon.com/AmazonS3/latest/API/v2-RESTBucketGET.html
-
-Deutsche Borse S3 dataset GitHub: https://github.com/Deutsche-Boerse/dbg-pds
-
-CSV columns: https://github.com/Deutsche-Boerse/dbg-pds/blob/master/docs/data_dictionary.md#eurex
-
-Use EUREX data, it is up-to-date.
-
-https://s3.eu-central-1.amazonaws.com/deutsche-boerse-eurex-pds/?list-type=2&continuation-token=
-https://s3.eu-central-1.amazonaws.com/deutsche-boerse-eurex-pds/?list-type=2&prefix=2018-03-2
-
-## Kafka Node
-
-* Using `kafka-node` package (require Python 2.7)
-
-Kafka-node documentation: https://github.com/SOHU-Co/kafka-node
-
-```
-$ pyenv local 2.7
-$ npm i -S kafka-node
-$ npm i -D @types/kafka-node
-```
-
-Extra steps:
-
-* From the type definition was missing the `ProducerStream` class declaration.
-* Suggested to the project maintainer, that we should keep the type definition directly in the project.
-
-## Add Dockerfile
-
-* Check `Dockerfile`
-* Using `node:alpine` package
-* Add `/healthz` endpoint
-* Add graceful shutdown based on [these suggestions](https://github.com/BretFisher/node-docker-good-defaults)
-* Add `pm2` for running and restarting node process
-

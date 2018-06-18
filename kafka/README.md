@@ -60,10 +60,6 @@ $ /opt/kafka/bin/kafka-console-producer.sh --broker-list kafka-1:9092 --topic bo
 $ /opt/kafka/bin/kafka-console-consumer.sh --bootstrap-server kafka-1:9092 --topic boerse.dev --from-beginning
 ```
 
-* Networking in Docker
-
-??
-
 ** Development
 
 ```

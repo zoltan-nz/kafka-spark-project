@@ -18,7 +18,7 @@ ENV KAFKA_CONNECT $KAFKA_CONNECT
 ENV ZOOKEEPER_CONNECT $ZOOKEEPER_CONNECT
 
 # checking every 30s to ensure this service returns HTTP 200
-HEALTHCHECK CMD curl -fs http://localhost:$PORT/healthz || exit 1
+HEALTHCHECK CMD curl -fs http://localhost:$PORT/api/heartbeat || exit 1
 
 WORKDIR /app
 COPY package.json package-lock.json ./

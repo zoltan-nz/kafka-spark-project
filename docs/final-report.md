@@ -366,6 +366,44 @@ Please note, we use one Apache Kafka topic in our implementation: `boerse.dev`
 
 ## Spark Application
 
+Apache Spark is complex. I mistakenly started to implement Apache Spark tutorial application without reading the whole, detailed documentation and I immediately had problems and difficult period.
+
+The most important: **read the docs!**
+
+https://spark.apache.org/docs/latest/
+
+(I've run more experiments and documented those difficulties. You can see these in the `SparkStreamer` folder: [SparkStreamer README.md](../SparkStreamer/README.md))
+
+The most important conclusions:
+
+* For learning and experimenting, run Spark session in `local` mode, using `.config("spark.master", "local") configuration. In this case, you don't have to run a separated Spark cluster and you can easily debug and restart your Java or Scala application in your IntelliJ IDEA.
+* Use `maven` for managing and run your project. Setup maven packages properly. You can find a working configuration in our [`pom.xml`](../SparkStreamer/pom.xml).
+
+Dockerization:
+
+Our docker container is a simply `maven:alpine` container.
+
+You can build and run in our folder with the following commands. 
+
+```
+$ docker build -t spark-streamer .
+$ docker run spark-streamer:latest mvn exec:java
+```
+
+Using host machine maven repository:
+
+```
+$docker run -v "$HOME/.m2":/root/.m2 spark-streamer:latest mvn exec:java 
+``` 
+
+**Useful links**
+
+* Apache Spark: https://spark.apache.org/docs/latest/
+* Maven: https://maven.apache.org/guides/
+* Learning Scala: https://www.scala-lang.org/
+* Scala sbt: https://www.scala-sbt.org/
+
+
 # Appendix 1 - Original project proposal
 
 ## Problem to solve

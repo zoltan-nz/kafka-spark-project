@@ -358,7 +358,7 @@ On Linux, you should be able to access to the Kafka instance from your host comp
 
 Please note, we use one Apache Kafka topic in our implementation: `boerse.dev`
 
-**Important links**
+**Important links:**
 
 * Apache Kafka: https://kafka.apache.org/
 * Apache Zookeeper: https://zookeeper.apache.org/
@@ -396,7 +396,21 @@ Using host machine maven repository:
 $docker run -v "$HOME/.m2":/root/.m2 spark-streamer:latest mvn exec:java 
 ``` 
 
-**Useful links**
+**Commands for development**
+
+Building our application:
+
+```
+$ mvn clean install
+```
+
+Running the application:
+
+```
+$ mvn exec:java
+```
+
+**Important links:**
 
 * Apache Spark: https://spark.apache.org/docs/latest/
 * Maven: https://maven.apache.org/guides/

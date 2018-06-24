@@ -84,6 +84,16 @@ $ docker-compose up
     
 * Open the frontend application in your browser: `$ open http://localhost:80`
 
+Shutting down docker-compose (use an other terminal window for running this command):
+
+```
+$ docker-compose down
+```
+
+Notes:
+* The first time building the maven based project is take a while, be patient.
+* Kafka generated files mapped to `./kafka/volumes` folder. If the streaming doesn't start when you launch this project first time, please shut down the docker-compose cluster and start again. Second time, all the mapped volume and folder will be available and Kafka can start properly.
+
 ## Run the project in developer mode
 
 You can run all components locally. In this way you can easily debug and add new features.
@@ -385,7 +395,7 @@ https://spark.apache.org/docs/latest/
 
 The most important conclusions:
 
-* For learning and experimenting, run Spark session in `local` mode, using `.config("spark.master", "local") configuration. In this case, you don't have to run a separated Spark cluster and you can easily debug and restart your Java or Scala application in your IntelliJ IDEA.
+* For learning and experimenting, run Spark session in `local` mode, using `.config("spark.master", "local")` configuration. In this case, you don't have to run a separated Spark cluster and you can easily debug and restart your Java or Scala application in your IntelliJ IDEA.
 * Use `maven` for managing and run your project. Setup maven packages properly. You can find a working configuration in our [`pom.xml`](../SparkStreamer/pom.xml).
 
 Dockerization:

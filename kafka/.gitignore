@@ -1,2 +1,4 @@
 zookeeper
 logs
+volumes/**/*
+!volumes/.gitkeep

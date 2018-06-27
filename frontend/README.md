@@ -1,4 +1,5 @@
-# DB Downloader Frontend API
+# Frontend
+
 
 Implementation steps:
 
@@ -20,7 +21,7 @@ Add `import 'typeface-roboto';` to `src/index.tsx`.
 
 Simple material button in `App.tsx`:
 
-```
+```typescript jsx
 import * as React from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';

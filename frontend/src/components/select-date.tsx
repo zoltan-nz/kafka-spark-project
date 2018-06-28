@@ -1,6 +1,8 @@
 
+import Button from '@material-ui/core/Button/Button';
+import Paper from '@material-ui/core/Paper/Paper';
 import Axios from 'axios';
-import { DatePicker, Paper, RaisedButton } from 'material-ui';
+import DatePicker from 'material-ui-pickers/DatePicker/DatePicker';
 import { Component, MouseEvent } from 'react';
 import * as React from 'react';
 import * as moment from 'moment';
@@ -24,18 +26,17 @@ export default class SelectDate extends Component<SelectDateProps, SelectDateSta
 
   render() {
     return (
-      <Paper className="paper center" zDepth={1}>
+      <Paper className="paper center" elevation={1}>
         <DatePicker
-          value={this.state.date}
-          onChange={(event, date) => this.updateDate(event, date)}
-          hintText="Select a streaming date"
+          date={this.state.date}
+          onChange={this.handleDateChange}
         />
-        <RaisedButton label="Download" onClick={event => this.download(event)}/>
+        <Button variant="raised" onClick={event => this.download(event)}>Download</Button>
       </Paper>
     );
   }
 
-  private updateDate(event: null, date: Date) {
+  private handleDateChange(date: Date) {
     this.setState(prevState => ({ ...prevState, date }));
   }
 

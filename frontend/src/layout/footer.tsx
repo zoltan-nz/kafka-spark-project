@@ -1,4 +1,4 @@
-import Paper from 'material-ui/Paper';
+import Paper from '@material-ui/core/Paper/Paper';
 import * as React from 'react';
 import { Component } from 'react';
 import axios from 'axios';
@@ -56,7 +56,7 @@ export default class Footer extends Component<FooterProps, FooterStatus> {
 
   render() {
     return (
-      <Paper className="paper" zDepth={1}>
+      <Paper className="paper" elevation={1}>
         Server status: {this.state.serverStatus}
       </Paper>
     );

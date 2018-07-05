@@ -1,7 +1,5 @@
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
-import MomentUtils from 'material-ui-pickers/utils/moment-utils';
-import MuiPickersUtilsProvider from 'material-ui-pickers/utils/MuiPickersUtilsProvider';
 import * as React from 'react';
 import { Component } from 'react';
 import { BrowserRouter } from 'react-router-dom';
@@ -15,9 +13,7 @@ class App extends Component<{}> {
     return (
       <BrowserRouter>
         <MuiThemeProvider theme={theme}>
-          <MuiPickersUtilsProvider utils={MomentUtils}>
-            <Main />
-          </MuiPickersUtilsProvider>
+          <Main />
         </MuiThemeProvider>
       </BrowserRouter>
     );

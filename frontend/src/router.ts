@@ -1,9 +1,9 @@
 import { ComponentType } from 'react';
-import Downloader from './routes/downloader';
-import Home from './routes/home';
-import Streamer from './routes/streamer';
+import Downloader from './pages/downloader';
+import Home from './pages/home';
+import Streamer from './pages/streamer';
 
-interface IRoute {
+export interface IRoute {
   readonly exact: boolean;
   readonly label: string;
   readonly path: string;
@@ -31,10 +31,8 @@ export const streamerRoute: IRoute = {
   component: Streamer
 };
 
-const routes: ReadonlyArray<IRoute> = [
+export const routes: ReadonlyArray<IRoute> = [
   homeRoute,
   downloaderRoute,
   streamerRoute
 ];
-
-export default routes;

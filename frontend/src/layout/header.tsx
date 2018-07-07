@@ -1,26 +1,35 @@
-import Tab from 'material-ui/Tabs/Tab';
-import Tabs from 'material-ui/Tabs/Tabs';
+import { AppBar, Tab, Tabs } from '@material-ui/core';
 import * as React from 'react';
-import { Component } from 'react';
-import { NavLink } from 'react-router-dom';
-import routes from '../router';
+import { Component, MouseEvent } from 'react';
+import { RouteComponentProps, withRouter } from 'react-router';
+import { IRoute, routes } from '../router';
 
-export default class Header extends Component<{}> {
+interface HeaderProps extends RouteComponentProps<{}> {}
+
+class Header extends Component<HeaderProps> {
 
   render() {
     return (
-        <Tabs>
+      <AppBar position="static" color="primary">
+        <Tabs value={this.props.location.pathname}>
           {
             routes.map((route, index) =>
               <Tab
-                value={index}
+                value={route.path}
                 key={index}
                 label={route.label}
-                containerElement={<NavLink exact={true} to={route.path} />}
+                onClick={event => this.handleTabClick(event, route)}
               />
             )
           }
         </Tabs>
+      </AppBar>
     );
   }
+
+  private handleTabClick(event: MouseEvent, route: IRoute) {
+    this.props.history.push(route.path);
+  }
 }
+
+export default withRouter(Header);

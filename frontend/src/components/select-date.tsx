@@ -22,21 +22,24 @@ export default class SelectDate extends Component<SelectDateProps, SelectDateSta
     this.state = {
       date: props.date || new Date()
     };
+
+    this.handleDateChange = this.handleDateChange.bind(this);
+    this.handleDownload = this.handleDownload.bind(this);
   }
 
-  render() {
+  public render() {
     return (
       <Paper className="paper center" elevation={1}>
         <MuiPickersUtilsProvider utils={MomentUtils}>
           <DatePicker
             keyboard={true}
             value={this.state.date}
-            onChange={date => this.handleDateChange(date)}
+            onChange={this.handleDateChange}
           />
         </MuiPickersUtilsProvider>
         <Button
           variant="raised"
-          onClick={event => this.handleDownload(event)}
+          onClick={this.handleDownload}
         >
           Download
         </Button>

@@ -15,6 +15,7 @@
     "typeface-roboto": "0.0.54"
   },
   "scripts": {
+    "clean": "del build coverage",
     "start:dev": "PORT=3001 react-scripts-ts start",
     "build": "CI=true react-scripts-ts build",
     "test:watch": "react-scripts-ts test --env=jsdom",
@@ -31,6 +32,7 @@
     "@types/react-dom": "^16.0.6",
     "@types/react-router": "^4.0.28",
     "@types/react-router-dom": "^4.2.7",
+    "del-cli": "^1.1.0",
     "eslint": "^5.0.1",
     "typescript": "^2.9.2"
   },

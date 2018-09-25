@@ -1,7 +1,7 @@
 import { Component } from 'react';
+import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import SelectDate from '../components/select-date';
-import * as React from 'react';
 
 interface IDownloaderState {}
 

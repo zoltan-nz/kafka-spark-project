@@ -1,7 +1,7 @@
 import Paper from '@material-ui/core/Paper/Paper';
+import axios from 'axios';
 import * as React from 'react';
 import { Component } from 'react';
-import axios from 'axios';
 
 enum ServerStatus {
   Online = 'Online',

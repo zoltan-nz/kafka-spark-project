@@ -1,14 +1,16 @@
 {
   "name": "kafka-spark-backend",
+  "version": "2.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/zoltan-nz/kafka-spark-project/tree/master/backend"
   },
-  "version": "1.0.0",
   "description": "Backend",
   "license": "MIT",
   "scripts": {
-    "lint": "tslint --project ./tsconfig.json --fix",
+    "clean": "tsc -b . --clean && del ./dist ./.cache ./coverage ./.rpt2_cache",
+    "prettier": "prettier --write '**/*.{ts,tsx,js,jsx,json,md,html}'",
+    "lint": "yarn prettier && tslint --project ./tsconfig.json --format codeFrame --force --fix",
     "start": "ts-node -r tsconfig-paths/register src/main.ts",
     "start:dev": "KAFKA_CONNECT=localhost:9092 nodemon --watch src",
     "build": "rm -rf dist && tsc",
@@ -20,37 +22,41 @@
     "docker:run": "docker run -p 3000:3000 zoltannz/kafka-spark-project-backend:latest"
   },
   "dependencies": {
-    "@nestjs/common": "^4.6.6",
-    "@nestjs/core": "^4.6.6",
-    "@nestjs/microservices": "^4.6.6",
-    "@nestjs/testing": "^4.6.6",
-    "@nestjs/websockets": "^4.6.6",
-    "aws-sdk": "^2.229.1",
-    "chalk": "^2.4.1",
-    "cors": "^2.8.4",
-    "fs-extra": "^5.0.0",
+    "@nestjs/common": "^6.1.1",
+    "@nestjs/core": "^6.1.1",
+    "@nestjs/microservices": "^6.1.1",
+    "@nestjs/platform-express": "^6.1.1",
+    "@nestjs/testing": "^6.1.1",
+    "@nestjs/websockets": "^6.1.1",
+    "aws-sdk": "^2.444.0",
+    "axios": "^0.18.0",
+    "chalk": "^2.4.2",
+    "cors": "^2.8.5",
+    "fs-extra": "^7.0.1",
     "kafka-node": "zoltan-nz/kafka-node#master",
-    "pm2": "^2.10.3",
-    "reflect-metadata": "^0.1.12",
-    "rxjs": "^5.5.10",
-    "typescript": "^2.8.3"
+    "pm2": "^3.5.0",
+    "reflect-metadata": "^0.1.13",
+    "rxjs": "^6.5.1",
+    "typescript": "^3.4.5"
   },
   "devDependencies": {
-    "@types/aws-sdk": "^2.7.0",
-    "@types/chalk": "^2.2.0",
-    "@types/cors": "^2.8.4",
-    "@types/express": "^4.11.1",
-    "@types/fs-extra": "^5.0.2",
-    "@types/jest": "^22.2.3",
-    "@types/node": "^10.0.0",
-    "@types/supertest": "^2.0.4",
-    "jest": "^22.4.3",
-    "nodemon": "^1.17.5",
-    "supertest": "^3.0.0",
-    "ts-jest": "^22.4.4",
-    "ts-node": "^6.0.1",
-    "tsconfig-paths": "^3.3.1",
-    "tslint": "5.9.1"
+    "@nestjs/testing": "^6.1.1",
+    "@types/cors": "^2.8.5",
+    "@types/express": "^4.16.1",
+    "@types/fs-extra": "^5.0.5",
+    "@types/jest": "^24.0.11",
+    "@types/node": "^11.13.8",
+    "@types/supertest": "^2.0.7",
+    "del-cli": "^1.1.0",
+    "jest": "^24.7.1",
+    "nodemon": "^1.18.11",
+    "prettier": "^1.17.0",
+    "supertest": "^4.0.2",
+    "ts-jest": "^24.0.2",
+    "ts-node": "^8.1.0",
+    "tsconfig-paths": "^3.8.0",
+    "tslint": "5.16.0",
+    "tslint-config-prettier": "^1.18.0"
   },
   "jest": {
     "moduleFileExtensions": [
@@ -64,5 +70,10 @@
       "^.+\\.(t|j)s$": "ts-jest"
     },
     "coverageDirectory": "../coverage"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "all",
+    "printWidth": 120
   }
 }

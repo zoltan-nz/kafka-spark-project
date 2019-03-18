@@ -10,24 +10,16 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "module": "commonjs",
-    "target": "es2017",
+    "target": "es2018",
+    "lib": ["esnext"],
     "sourceMap": true,
     "allowJs": true,
     "outDir": "./dist",
     "baseUrl": "./src",
-    "typeRoots": [
-      "@types",
-      "node_modules/@types"
-    ],
-    "forceConsistentCasingInFileNames": true
+    "typeRoots": ["@types", "node_modules/@types"],
+    "forceConsistentCasingInFileNames": true,
+    "incremental": true
   },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "**/*.spec.ts",
-    "__tests__",
-    "**/*-test.ts"
-  ]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "**/*.spec.ts", "__tests__", "**/*-test.ts"]
 }

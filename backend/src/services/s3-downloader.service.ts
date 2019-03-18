@@ -1,4 +1,4 @@
-import { Component } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { appendFile, ensureFile, readFile, writeFile } from 'fs-extra';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 
@@ -9,9 +9,8 @@ const HEADER_LINE =
   'ISIN,MarketSegment,UnderlyingSymbol,UnderlyingISIN,Currency,SecurityType,MaturityDate,StrikePrice,PutOrCall,MLEG,' +
   'ContractGenerationNumber,SecurityID,Date,Time,StartPrice,MaxPrice,MinPrice,EndPrice,NumberOfContracts,NumberOfTrades\n';
 
-@Component()
-export default class S3DownloaderService {
-
+@Injectable()
+export class S3DownloaderService {
   private async _outputFileStream(date: string): Promise<string> {
     const fileName = `csv-storage/${date}.csv`;
     await ensureFile(fileName);
@@ -19,11 +18,9 @@ export default class S3DownloaderService {
   }
 
   private async _downloadPartials(date: string): Promise<boolean> {
-
     const partialDownloadPromises: Promise<void>[] = [];
 
     for (const hour of HOURS) {
-
       const remoteCSVFileName = `${date}/${date}_BINS_XEUR${hour}.csv`;
       const partialFileName = `${CSV_STORAGE_PATH}/${remoteCSVFileName}`;
       console.log(`Downloading: ${remoteCSVFileName}`);
@@ -35,7 +32,6 @@ export default class S3DownloaderService {
       };
 
       const promise = axios.get(url, config).then(async (response: AxiosResponse<string>) => {
-
         const dataWithoutFirstLine = response.data.substring(response.data.indexOf('\n') + 1);
 
         await ensureFile(partialFileName);
@@ -58,7 +54,6 @@ export default class S3DownloaderService {
     await appendFile(concatenatedFileStream, HEADER_LINE);
 
     for (const hour of HOURS) {
-
       const remoteCSVFileName = `${date}/${date}_BINS_XEUR${hour}.csv`;
       const partialFileName = `${CSV_STORAGE_PATH}/${remoteCSVFileName}`;
       console.log(`Merging: ${partialFileName}`);

@@ -1,5 +1,5 @@
 import * as KafkaNode from 'kafka-node';
-import { Component } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 
 const KAFKA_TOPIC = 'boerse.dev';
 
@@ -7,9 +7,8 @@ interface BoerseMessage {
   data: object;
 }
 
-@Component()
-export default class KafkaService {
-
+@Injectable()
+export class KafkaService {
   client: KafkaNode.KafkaClient;
   producer: KafkaNode.HighLevelProducer;
   kafkaClientOptions: KafkaNode.KafkaClientOptions;
@@ -26,7 +25,7 @@ export default class KafkaService {
       console.log('Kafka Producer is connected and ready.');
     });
 
-    this.producer.on('error', (error) => {
+    this.producer.on('error', error => {
       console.error('Something wrong with Kafka Client');
       console.error(error);
     });
@@ -37,7 +36,6 @@ export default class KafkaService {
   }
 
   sendTransaction(data: BoerseMessage) {
-
     const messages = Buffer.from(JSON.stringify({ data }));
 
     // Create a new payload

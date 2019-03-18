@@ -2,8 +2,7 @@ import { Body, Controller, Get, Post } from '@nestjs/common';
 import { createReadStream, readdir } from 'fs-extra';
 import { resolve } from 'path';
 import { cwd } from 'process';
-import * as KafkaNode from 'kafka-node';
-import { ProducerStreamOptions } from 'kafka-node';
+import { ProducerStream, ProducerStreamOptions } from 'kafka-node';
 import { Transform } from 'stream';
 
 interface FileDto {
@@ -31,7 +30,6 @@ const csvFiles = async (): Promise<string[]> => {
 
 @Controller('api/data-files')
 export class DataFilesController {
-
   @Get()
   async findAll() {
     const files: string[] = await csvFiles();
@@ -49,7 +47,7 @@ export class DataFilesController {
         kafkaHost: process.env.KAFKA_CONNECT || 'http://localhost:9092',
       },
     };
-    const kafkaServiceStream = new KafkaNode.ProducerStream(producerStreamOptions);
+    const kafkaServiceStream = new ProducerStream(producerStreamOptions);
 
     const csvTransform = new Transform({
       highWaterMark: 100,
@@ -65,13 +63,13 @@ export class DataFilesController {
     });
 
     try {
-      createReadStream(resolve(cwd(), CSV_STORAGE_DIRECTORY_NAME, fileName), { highWaterMark: 100 })
+      createReadStream(resolve(cwd(), CSV_STORAGE_DIRECTORY_NAME, fileName), {
+        highWaterMark: 100,
+      })
         .pipe(csvTransform)
         .pipe(kafkaServiceStream);
-
     } catch (e) {
       console.error('Read Stream Error', e);
     }
-
   }
 }

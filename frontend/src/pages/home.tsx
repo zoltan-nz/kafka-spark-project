@@ -1,18 +1,15 @@
-import { Component } from 'react';
 import * as React from 'react';
-import { RouteComponentProps } from 'react-router';
+import { Component } from 'react';
+import { RouteComponentProps } from 'react-router-dom';
 
-interface IHomeState {}
+interface IHomeProps extends RouteComponentProps<{}> {}
 
-interface IHomeProps extends RouteComponentProps<Component> {}
-
-export default class Home extends Component<IHomeProps, IHomeState> {
-
+export default class Home extends Component<IHomeProps, {}> {
   constructor(props: IHomeProps) {
     super(props);
   }
 
-  render() {
-    return (<h1>Home Page</h1>);
+  public render() {
+    return <h1>Home Page</h1>;
   }
 }

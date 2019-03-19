@@ -2,26 +2,21 @@
 
 ## Changelog
 
-### v2.0.0.
+### v2.0.0
 
 - Nest.js framework updated to the latest and deprecations fixed.
 - `Prettier` added.
 - Switch Node package manager from `npm` to `yarn`.
 - Update `Dockerfile` to use two steps container building process for reducing container size
 
-Next steps:
-
-- Add `GET http://localhost:3000/api/heartbeat` endpoint and respond with `200`
-- Add `POST http://localhost:3000/api/download-date` endpoint and download raw data
-
-## Implementation Log
+## Implementation Notes
 
 - Install `cors` package and added to Express.
 - Create `heartbeat.controller.ts`
 - Add controller to the `app.module.ts`
 - Accept POST request on `/api/downloader`
 
-## Amazon AWS S3 downloader
+### Amazon AWS S3 downloader
 
 https://aws.amazon.com/sdk-for-node-js/
 
@@ -57,7 +52,7 @@ Use EUREX data, it is up-to-date.
 https://s3.eu-central-1.amazonaws.com/deutsche-boerse-eurex-pds/?list-type=2&continuation-token=
 https://s3.eu-central-1.amazonaws.com/deutsche-boerse-eurex-pds/?list-type=2&prefix=2018-03-2
 
-## Kafka Node
+### Kafka Node
 
 - Using `kafka-node` package (require Python 2.7)
 
@@ -74,7 +69,7 @@ Extra steps:
 - From the type definition was missing the `ProducerStream` class declaration.
 - Suggested to the project maintainer, that we should keep the type definition directly in the project.
 
-## Add Dockerfile
+### Add Dockerfile
 
 - Check `Dockerfile`
 - Using `node:alpine` package

@@ -9,7 +9,7 @@ import Main from './main';
 const theme = createMuiTheme();
 
 class App extends Component<{}> {
-  render() {
+  public render() {
     return (
       <BrowserRouter>
         <MuiThemeProvider theme={theme}>

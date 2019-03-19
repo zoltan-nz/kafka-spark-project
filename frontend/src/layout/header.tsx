@@ -4,24 +4,22 @@ import { Component, MouseEvent } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { IRoute, routes } from '../router';
 
-interface HeaderProps extends RouteComponentProps<{}> {}
+interface IHeaderProps extends RouteComponentProps<{}> {}
 
-class Header extends Component<HeaderProps> {
-
-  render() {
+class Header extends Component<IHeaderProps> {
+  public render() {
     return (
       <AppBar position="static" color="primary">
         <Tabs value={this.props.location.pathname}>
-          {
-            routes.map((route, index) =>
-              <Tab
-                value={route.path}
-                key={index}
-                label={route.label}
-                onClick={event => this.handleTabClick(event, route)}
-              />
-            )
-          }
+          {routes.map((route, index) => (
+            <Tab
+              value={route.path}
+              key={index}
+              label={route.label}
+              /* tslint:disable-next-line:jsx-no-lambda */
+              onClick={event => this.handleTabClick(event, route)}
+            />
+          ))}
         </Tabs>
       </AppBar>
     );

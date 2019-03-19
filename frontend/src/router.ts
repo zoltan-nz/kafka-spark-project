@@ -11,28 +11,24 @@ export interface IRoute {
 }
 
 export const homeRoute: IRoute = {
+  component: Home,
   exact: true,
   label: 'Home',
   path: '/',
-  component: Home
 };
 
 export const downloaderRoute: IRoute = {
+  component: Downloader,
   exact: true,
   label: 'Downloader',
   path: '/downloader',
-  component: Downloader
 };
 
 export const streamerRoute: IRoute = {
+  component: Streamer,
   exact: true,
   label: 'Streamer',
   path: '/streamer',
-  component: Streamer
 };
 
-export const routes: ReadonlyArray<IRoute> = [
-  homeRoute,
-  downloaderRoute,
-  streamerRoute
-];
+export const routes: ReadonlyArray<IRoute> = [homeRoute, downloaderRoute, streamerRoute];

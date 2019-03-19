@@ -1,15 +1,12 @@
 import { Component } from 'react';
 import * as React from 'react';
-import { RouteComponentProps } from 'react-router';
+import { RouteComponentProps } from 'react-router-dom';
 import SelectDate from '../components/select-date';
 
-interface IDownloaderState {}
+interface IDownloaderProps extends RouteComponentProps<{}> {}
 
-interface IDownloaderProps extends RouteComponentProps<Component> {}
-
-export default class Downloader extends Component<IDownloaderProps, IDownloaderState> {
-
-  render() {
-    return (<SelectDate />);
+export default class Downloader extends Component<IDownloaderProps> {
+  public render() {
+    return <SelectDate />;
   }
 }

@@ -5,8 +5,5 @@ import App from './layout/app';
 import registerServiceWorker from './services/register-service-worker';
 import './styles/app.css';
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('root') as HTMLElement
-);
+ReactDOM.render(<App />, document.getElementById('root') as HTMLElement);
 registerServiceWorker();

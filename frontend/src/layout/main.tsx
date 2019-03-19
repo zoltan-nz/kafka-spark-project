@@ -7,14 +7,14 @@ import Footer from './footer';
 import Header from './header';
 
 export default class Main extends Component<{}> {
-  render() {
+  public render() {
     return (
       <div>
         <Header />
         <div className="container">
-          {routes.map((route, i) =>
+          {routes.map((route, i) => (
             <Route key={i} exact={route.exact} path={route.path} component={route.component} />
-          )}
+          ))}
           <Footer />
         </div>
       </div>

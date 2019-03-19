@@ -5,56 +5,51 @@ import { Component } from 'react';
 
 enum ServerStatus {
   Online = 'Online',
-  Offline = 'Offline'
+  Offline = 'Offline',
 }
 
-interface FooterProps {
-
-}
-
-interface FooterStatus {
+interface IFooterStatus {
   serverStatus: ServerStatus;
   counter: number;
 }
 
-export default class Footer extends Component<FooterProps, FooterStatus> {
+export default class Footer extends Component<{}, IFooterStatus> {
+  public heartbeat: number;
 
-  heartbeat: number;
-
-  constructor(props: FooterProps) {
+  constructor(props: {}) {
     super(props);
     this.state = {
+      counter: 0,
       serverStatus: ServerStatus.Offline,
-      counter: 0
     };
   }
 
-  async checkServerStatus() {
+  public async checkServerStatus() {
     try {
       await axios.get('/api/heartbeat');
       this.setState(prevState => ({
         ...prevState,
+        counter: prevState.counter + 1,
         serverStatus: ServerStatus.Online,
-        counter: prevState.counter + 1
       }));
     } catch (e) {
       this.setState(prevState => ({
         ...prevState,
+        counter: prevState.counter + 1,
         serverStatus: ServerStatus.Offline,
-        counter: prevState.counter + 1
       }));
     }
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     this.heartbeat = window.setInterval(this.checkServerStatus.bind(this), 5000);
   }
 
-  componentWillUnmount() {
+  public componentWillUnmount() {
     clearTimeout(this.heartbeat);
   }
 
-  render() {
+  public render() {
     return (
       <Paper className="paper" elevation={1}>
         Server status: {this.state.serverStatus}

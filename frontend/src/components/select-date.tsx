@@ -1,26 +1,24 @@
 import { Button, Paper } from '@material-ui/core';
 import Axios from 'axios';
-import { DatePicker, MuiPickersUtilsProvider } from 'material-ui-pickers';
+import { DateFormatInput } from 'material-ui-next-pickers';
 import { MaterialUiPickersDate } from 'material-ui-pickers/typings/date';
-import MomentUtils from 'material-ui-pickers/utils/moment-utils';
 import * as moment from 'moment';
 import * as React from 'react';
 import { Component, MouseEvent } from 'react';
 
-interface SelectDateProps {
+interface ISelectDateProps {
   date?: Date | null;
 }
 
-interface SelectDateStatus {
+interface ISelectedDateStatus {
   date: Date;
 }
 
-export default class SelectDate extends Component<SelectDateProps, SelectDateStatus> {
-
-  constructor(props: SelectDateProps) {
+export default class SelectDate extends Component<ISelectDateProps, ISelectedDateStatus> {
+  constructor(props: ISelectDateProps) {
     super(props);
     this.state = {
-      date: props.date || new Date()
+      date: props.date || new Date(),
     };
 
     this.handleDateChange = this.handleDateChange.bind(this);
@@ -30,17 +28,8 @@ export default class SelectDate extends Component<SelectDateProps, SelectDateSta
   public render() {
     return (
       <Paper className="paper center" elevation={1}>
-        <MuiPickersUtilsProvider utils={MomentUtils}>
-          <DatePicker
-            keyboard={true}
-            value={this.state.date}
-            onChange={this.handleDateChange}
-          />
-        </MuiPickersUtilsProvider>
-        <Button
-          variant="raised"
-          onClick={this.handleDownload}
-        >
+        <DateFormatInput name="date-input" value={this.state.date} onChange={this.handleDateChange} />
+        <Button variant="raised" onClick={this.handleDownload}>
           Download
         </Button>
       </Paper>

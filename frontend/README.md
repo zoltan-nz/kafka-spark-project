@@ -1,6 +1,5 @@
 # Frontend
 
-
 Implementation steps:
 
 - [x] Add material design
@@ -32,7 +31,7 @@ class App extends React.Component {
   render() {
     return (
       <MuiThemeProvider>
-        <RaisedButton label="Default"/>
+        <RaisedButton label="Default" />
       </MuiThemeProvider>
     );
   }
@@ -41,29 +40,29 @@ class App extends React.Component {
 export default App;
 ```
 
-* State and Prop management
-* Change event
-* Click event
-* Ajax library
+- State and Prop management
+- Change event
+- Click event
+- Ajax library
 
 ## Add Footer and check server status
 
-* Create a new component: `Footer`
-* Using `axios` to check server availability.
+- Create a new component: `Footer`
+- Using `axios` to check server availability.
 
 ## Restructuring default layout
 
-* Separate code in subfolders.
-* Update Material UI
+- Separate code in subfolders.
+- Update Material UI
 
 ## Add router
 
-* react-router v4
+- react-router v4
 
 ## Docker build
 
-* Using `nginx:alpine`
-* Add nginx configuration
+- Using `nginx:alpine`
+- Add nginx configuration
 
 ```
 $ docker build -t zoltannz/kafka-spark-project-frontend .
@@ -73,8 +72,8 @@ $ docker build -t zoltannz/kafka-spark-project-frontend .
 
 Challenges:
 
-* How can we access to the actual route pathname? We need this information to setup the default Tab value.
-* How can we redirect, navigate to other page if we click on a Tab?
+- How can we access to the actual route pathname? We need this information to setup the default Tab value.
+- How can we redirect, navigate to other page if we click on a Tab?
 
 ### Accessing Route properties
 
@@ -93,7 +92,7 @@ interface HeaderProps extends RouteComponentProps<{}> {}
 class Header extends Component<HeaderProps> {}
 
 export default withRouter(Header);
-``` 
+```
 
 After this orchestration, we have access to `location` property inside our component, so we can use the actual pathname where we need using `this.props.location.pathname`.
 
@@ -111,21 +110,18 @@ import { IRoute, routes } from '../router';
 interface HeaderProps extends RouteComponentProps<{}> {}
 
 class Header extends Component<HeaderProps> {
-
   render() {
     return (
       <AppBar position="static" color="primary">
         <Tabs value={this.props.location.pathname}>
-          {
-            routes.map((route, index) =>
-              <Tab
-                value={route.path}
-                key={index}
-                label={route.label}
-                onClick={event => this.handleTabClick(event, route)}
-              />
-            )
-          }
+          {routes.map((route, index) => (
+            <Tab
+              value={route.path}
+              key={index}
+              label={route.label}
+              onClick={event => this.handleTabClick(event, route)}
+            />
+          ))}
         </Tabs>
       </AppBar>
     );
@@ -137,5 +133,4 @@ class Header extends Component<HeaderProps> {
 }
 
 export default withRouter(Header);
-
 ```

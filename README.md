@@ -30,8 +30,8 @@ $ docker-compose down
 
 Notes:
 
-- The first time building the maven based project is take a while, be patient.
-- Kafka generated files mapped to `./kafka/volumes` folder. If the streaming doesn't start when you launch this project first time, please shut down the docker-compose cluster and start again. Second time, all the mapped volume and folder will be available and Kafka can start properly.
+- Building the maven based projects at the first time takes a while, please be patient.
+- Kafka generated files are mapped to `./kafka/volumes` folder. If the streaming does not start when the project is launched at first time, shut down the docker-compose cluster and start it up again. All mapped volumes and folders should be available at the second launch and Kafka can start properly.
 
 ## Run the project in developer mode
 

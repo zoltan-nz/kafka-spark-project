@@ -41,7 +41,7 @@ services:
       - "9092:9092"
     hostname: "kafka"
     volumes:
-      - ./kafka/volumes/docker.sock:/var/run/docker.sock
+      - /var/run/docker.sock:/var/run/docker.sock
       - ./kafka/volumes/kafka:/kafka
   kafka-console:
     container_name: kafka-console
